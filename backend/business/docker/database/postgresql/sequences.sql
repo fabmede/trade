@@ -1,0 +1,1 @@
+CREATE SEQUENCE trade_functionality_seq INCREMENT 1 START 1;

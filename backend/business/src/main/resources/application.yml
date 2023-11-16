@@ -1,0 +1,25 @@
+server:
+  port: 8090
+
+spring :
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+  datasource:
+    platform: postgres
+    driverClassName: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: postgres
+
+google:
+  clientId: 925845673666-53lju5olbklsnf4bqbkfsdkj1fu350ta.apps.googleusercontent.com
+
+# jwt
+jwt:
+  secret: kajshdfklhasdkflhlsifyiqewyfiadhsfjahdsfk
+  expiration: 3600000
+  secretPsw: kasdjhfkadhsY776ggTyUU65khaskdjfhYuHAwjñlji
+
+logging.level.: DEBUG
