@@ -21,9 +21,13 @@ function FunctionalityEdit() {
       description : description
     }
   }
+
+  const callBackEditSuccess = (callBackEditSuccess)  => {
+    console.log('Calling callBackEditSuccess');
+  }
   return (
     <>
-      <CrudEdit api={api} id={id} getData={getData} routeLink={routeLink} >
+      <CrudEdit api={api} id={id} getData={getData} routeLink={routeLink} callBackEditSuccess={callBackEditSuccess}>
         <Form>
           <Form.Group className="mb-3" controlId="functionality.nameId">
             <Form.Label size="sm">Name</Form.Label>

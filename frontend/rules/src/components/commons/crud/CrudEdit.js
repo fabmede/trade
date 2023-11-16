@@ -32,13 +32,23 @@ function CrudEdit(props) {
         headers,
       })
       .then((res) => {
-        showSuccessMessage('Register success changed! ')
+        showSuccessMessage('Register success changed! ');
+        console.log('props.callBackEditSuccess ', props.callBackEditSuccess );
+        if(props.callBackEditSuccess !== undefined && props.callBackEditSuccess instanceof Function){
+          props.callBackEditSuccess(res); 
+        }
       })
       .catch((err) => {
         showErrorMessage('There was an error while trying to change the register! ')
+        if(props.callBackEditError !== undefined && props.callBackEditError instanceof Function){
+          props.callBackEditError(err); 
+        }
       })
       .finally(() => {
         setShowSaveConfirm(false);
+        if(props.callBackEditFinnaly !== undefined && props.callBackEditFinnaly instanceof Function){
+          props.callBackEditFinally(); 
+        }
       });
   };
 

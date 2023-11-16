@@ -23,23 +23,28 @@ function CrudCreate(props) {
   };
 
   const save = () => {
-
-    console.log('Saving register', props.getData());
-    
     axios
       .post(props.api, props.getData(), {
         headers,
       })
       .then((res) => {
-        console.log('res.data', res.data);
-        props.successCreate(res); 
         showSuccessMessage('Register success created! ')
+        if(props.callBackCreateSuccess !== undefined && props.callBackCreateSuccess instanceof Function){
+          props.callBackCreateSuccess(res); 
+        }        
       })
       .catch((err) => {
         showErrorMessage('There was an error while trying to create the register! ')
+        if(props.callBackCreateError !== undefined && props.callBackCreateError instanceof Function){
+          props.callBackCreateError(err); 
+        }        
+
       })
       .finally(() => {
         setShowSaveConfirm(false);
+        if(props.callBackCreateFinally !== undefined && props.callBackCreateFinally instanceof Function){
+          props.callBackCreateFinally(); 
+        }        
       });
   };
 

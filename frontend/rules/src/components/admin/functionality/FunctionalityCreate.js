@@ -21,7 +21,7 @@ function FunctionalityCreate() {
     };
   };
 
-  const successCreate = (res) => {
+  const callBackCreateSuccess = (res) => {
     let functionality = {
       functionality :  res.data
     }
@@ -29,7 +29,7 @@ function FunctionalityCreate() {
   }
 
   return (
-    <CrudCreate api={api} getData={getData} routeLink={routeLink}  successCreate={successCreate}> 
+    <CrudCreate api={api} getData={getData} routeLink={routeLink}  callBackCreateSuccess={callBackCreateSuccess}> 
       <Form>
         <Form.Group className="mb-3" controlId="functionality.nameId">
           <Form.Label size="sm">Name</Form.Label>
