@@ -1,4 +1,3 @@
-import axios from "axios";
 import { useState } from "react";
 import Modal from "react-bootstrap/Modal";
 import { ButtonGroup } from "react-bootstrap";
@@ -6,27 +5,24 @@ import { BsArrowReturnLeft, BsSave2 } from "react-icons/bs";
 import Button from "react-bootstrap/Button";
 import { ContainerContext } from "../../../commons/utils/ContainerContext";
 import { useContext } from "react";
-import { AppContext } from "../../../commons/utils/AppContext";
+import AxiosHttp from "../../../commons/utils/AxiosHttpInterceptor";
 
 function CrudCreate(props) {
 
   const {showSuccessMessage,showErrorMessage} = useContext(ContainerContext);
-  const {getUserLooged} = useContext(AppContext);
+  const axiosHttp = AxiosHttp(); 
 
   const [showSaveConfirm, setShowSaveConfirm] = useState(false);
   const handleSaveClose = () => setShowSaveConfirm(false);
   const handleSaveShow = () => setShowSaveConfirm(true);
 
-  const headers = {
-    Authorization: `Bearer ${getUserLooged().user.access_token}`,
-    Accept: "application/json",
-  };
-
   const save = () => {
-    axios
-      .post(props.api, props.getData(), {
-        headers,
-      })
+
+    console.log('save props.getData()', props.getData());
+    console.log('save props.api', props.api);
+
+    axiosHttp
+      .post(props.api, props.getData())
       .then((res) => {
         showSuccessMessage('Register success created! ')
         if(props.callBackCreateSuccess !== undefined && props.callBackCreateSuccess instanceof Function){

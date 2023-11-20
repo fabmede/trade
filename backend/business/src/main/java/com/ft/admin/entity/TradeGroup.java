@@ -16,6 +16,8 @@ public class TradeGroup implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@SequenceGenerator(name = "trade_group_seq", sequenceName = "trade_group_seq", initialValue = 1, allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "trade_group_seq")	
 	private Integer id;
 
 	private String description;

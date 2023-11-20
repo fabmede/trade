@@ -5,9 +5,9 @@ import CrudSearch from "../../commons/crud/CrudSearch";
 import Table from "../../commons/Table";
 import { useNavigate } from "react-router-dom";
 
-function FunctionalitySearch() {
-  const api = "http://localhost:8090/tradefunctionalities/";
-  const [functionalities, setFunctionalities] = useState([]);
+function RoleSearch() {
+  const api = "http://localhost:8090/traderoles/";
+  const [tradeRoles, setTradeRoles] = useState([]);
   const navigate = useNavigate();
 
   const columns = [
@@ -19,7 +19,7 @@ function FunctionalitySearch() {
   ];
 
   const callBackSearchSuccess = (callBackSearchSuccessRes) => {
-    setFunctionalities(callBackSearchSuccessRes.data);
+    setTradeRoles(callBackSearchSuccessRes.data);
   };
 
   const callBackSearchError = (callBackSearchError) => {
@@ -27,26 +27,24 @@ function FunctionalitySearch() {
   };
 
   const callBackSearchClear = () => {
-    setFunctionalities([]);
+    setTradeRoles([]);
   };
 
   const callBackOnClickEditButton = (data) => {
-    navigate("/admin/functionality/edit", {
-      state: { functionality: data },
+    navigate("/admin/role/edit", {
+      state: { tradeRole :data },
     });
   };
 
   const callBackOnClickDetailButton = (data) => {
-    navigate("/admin/functionality/detail", {
-      state: { functionality: data },
+    navigate("/admin/role/detail", {
+      state: { tradeRole: data },
     });
   };
 
   const callBackOnClickCreateButton = () => {
-    navigate("/admin/functionality/create");
+    navigate("/admin/role/create");
   };  
-
-  
 
   return (
     <CrudSearch
@@ -57,11 +55,11 @@ function FunctionalitySearch() {
       callBackOnClickCreateButton={callBackOnClickCreateButton}
     >
       <CrudSearch.Search>
-        <Form.Group className="mb-3" controlId="functionality.nameId">
+        <Form.Group className="mb-3" controlId="tradegroups.nameId">
           <Form.Label size="sm">Name</Form.Label>
           <Form.Control size="sm" type="text" placeholder="Enter name" />
         </Form.Group>
-        <Form.Group className="mb-3" controlId="functionality.descriptionId">
+        <Form.Group className="mb-3" controlId="tradegroups.descriptionId">
           <Form.Label size="sm">Description</Form.Label>
           <Form.Control size="sm" type="text" placeholder="Enter description" />
         </Form.Group>
@@ -69,7 +67,7 @@ function FunctionalitySearch() {
 
       <CrudSearch.Result>
         <Table
-          data={functionalities}
+          data={tradeRoles}
           callBackOnClickEditButton={callBackOnClickEditButton}
           columns={columns}
           callBackOnClickDetailButton={callBackOnClickDetailButton}
@@ -79,4 +77,4 @@ function FunctionalitySearch() {
   );
 }
 
-export default FunctionalitySearch;
+export default RoleSearch;

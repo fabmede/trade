@@ -1,16 +1,15 @@
-import axios from "axios";
 import { useContext, useState } from "react";
 import Modal from "react-bootstrap/Modal";
 import { ButtonGroup } from "react-bootstrap";
 import { BsArrowReturnLeft, BsSave2, BsTrash2 } from "react-icons/bs";
 import Button from "react-bootstrap/Button";
 import { ContainerContext } from "../../../commons/utils/ContainerContext";
-import { AppContext } from "../../../commons/utils/AppContext";
+import AxiosHttp from "../../../commons/utils/AxiosHttpInterceptor";
 
 function CrudEdit(props) {
 
+  const axiosHttp = AxiosHttp(); 
   const {showSuccessMessage,showErrorMessage} = useContext(ContainerContext);
-  const {getUserLooged} = useContext(AppContext);
 
   const [showSaveConfirm, setShowSaveConfirm] = useState(false);
   const handleSaveClose = () => setShowSaveConfirm(false);
@@ -20,17 +19,9 @@ function CrudEdit(props) {
   const handleDeleteClose = () => setShowDeleteConfirm(false);
   const handleDeleteShow = () => setShowDeleteConfirm(true);
 
-
-  const headers = {
-    Authorization: `Bearer ${getUserLooged().user.access_token}`,
-    Accept: "application/json",
-  };
-
   const save = () => {
-    axios
-      .put(props.api + props.id, props.getData(), {
-        headers,
-      })
+    axiosHttp
+      .put(props.api + props.id, props.getData())
       .then((res) => {
         showSuccessMessage('Register success changed! ');
         console.log('props.callBackEditSuccess ', props.callBackEditSuccess );
@@ -55,8 +46,8 @@ function CrudEdit(props) {
   const remove = () => {
     const data = {};
 
-    axios
-      .delete(props.api + props.id, { data, headers })
+    axiosHttp
+      .delete(props.api + props.id, { data })
       .then((res) => {
         showSuccessMessage('Register success deleted! ')
       })

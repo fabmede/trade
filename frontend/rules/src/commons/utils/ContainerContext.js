@@ -1,5 +1,5 @@
 import { createContext, useState } from "react";
-import { Alert } from "react-bootstrap";
+import { Alert, ProgressBar } from "react-bootstrap";
 
 export const ContainerContext = createContext();
 
@@ -8,9 +8,11 @@ export const ContainerProvider = ({ children }) => {
     visible: false,
     detail: {
       type: "success",
-      message: '',
+      message: "",
     },
   });
+
+  const [hidden, setHidden] = useState(true);
 
   const showSuccessMessage = (message) => {
     setMessage({
@@ -22,7 +24,6 @@ export const ContainerProvider = ({ children }) => {
     });
   };
 
-
   const showErrorMessage = (message) => {
     setMessage({
       visible: true,
@@ -33,17 +34,51 @@ export const ContainerProvider = ({ children }) => {
     });
   };
 
-  return (
-    <ContainerContext.Provider value={{ showSuccessMessage, showErrorMessage }}>
-      {message.visible ? (
-        <Alert key={message.detail.type} variant={message.detail.type}>
-          {message.detail.message}
-        </Alert>
-      ) : (
-        ""
-      )}
+  const showLoading = () => {
+    setHidden(false);
+  };
 
-      {children}
+  const hiddenLoading = () => {
+    setHidden(true);
+  };
+
+  const showContent = () => {
+    return !hidden ? "none" : "block";
+  };
+
+  return (
+    <ContainerContext.Provider
+      value={{
+        showSuccessMessage,
+        showErrorMessage,
+        showLoading,
+        hiddenLoading,
+      }}
+    >
+      <div
+        style={{
+          textAlign: "center",
+          marginLeft: "0%",
+          marginRight: "0%",
+          marginTop: "2%",
+        }}
+        hidden={hidden}
+      >
+        <ProgressBar animated now={100} />
+      </div>
+
+      <div style={{ display: showContent() }}>
+        {message.visible ? (
+          <Alert key={message.detail.type} variant={message.detail.type}>
+            {message.detail.message}
+          </Alert>
+        ) : (
+          ""
+        )}
+
+        {children}
+        
+      </div>
     </ContainerContext.Provider>
   );
 };

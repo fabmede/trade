@@ -1,4 +1,3 @@
-import axios from "axios";
 import { useState } from "react";
 import Modal from "react-bootstrap/Modal";
 import { ButtonGroup } from "react-bootstrap";
@@ -6,28 +5,22 @@ import { BsArrowReturnLeft, BsTrash2 } from "react-icons/bs";
 import Button from "react-bootstrap/Button";
 import { useContext } from "react";
 import {  ContainerContext } from "../../../commons/utils/ContainerContext";
-import { AppContext } from "../../../commons/utils/AppContext";
+import AxiosHttp from "../../../commons/utils/AxiosHttpInterceptor";
 
 function CrudDetail (props) {
 
   const {showSuccessMessage,showErrorMessage} = useContext(ContainerContext);
-  const {getUserLooged} = useContext(AppContext);
+  const axiosHttp = AxiosHttp(); 
 
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const handleDeleteClose = () => setShowDeleteConfirm(false);
   const handleDeleteShow = () => setShowDeleteConfirm(true);
 
-
-  const headers = {
-    Authorization: `Bearer ${getUserLooged().user.access_token}`,
-    Accept: "application/json",
-  };
-
   const remove = () => {
     const data = {};
 
-    axios
-      .delete(props.api + props.id, { data, headers })
+    axiosHttp
+      .delete(props.api + props.id, { data })
       .then((res) => {
         showSuccessMessage('Register success deleted! ');
       })
