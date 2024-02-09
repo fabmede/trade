@@ -94,7 +94,6 @@ function GroupFunctionalityEdit(props) {
       )
       .then((res) => {
         tradeFunctionalitiesRoles.push(res.data);
-        console.log(tradeFunctionalitiesRoles);
         setShowSaveConfirm(false);
       })
       .catch((err) => {
@@ -114,21 +113,25 @@ function GroupFunctionalityEdit(props) {
         { data: pCurrentTradeGroup }
       )
       .then((res) => {
+
         let tradeFunctionalitiesRolesAux = tradeFunctionalitiesRoles;
-
-        console.log('Percorrendo selecionado..:', pCurrentTradeGroup);
-
-
         tradeFunctionalitiesRolesAux.forEach((element, index) => {
-          console.log('Percorrendo element..:', element);
+          console.log('Elemento', element);
+          console.log('index', index);
 
           if (
             element.tradeFunctionalityDto.id ===
               pCurrentTradeGroup.tradeFunctionalityDto.id &&
             element.tradeRoleDto.id === pCurrentTradeGroup.tradeRoleDto.id
           ) {
-            console.log('Elemento encontrado para remover index..:', index);
-            setTradeFunctionalitiesRoles(tradeFunctionalitiesRoles.splice(index,0));
+            console.log('tradeFunctionalitiesRoles.size', tradeFunctionalitiesRoles.length);
+            //const newTradeFunctionalitiesRoles = tradeFunctionalitiesRoles.splice(index,1);
+            //console.log('newTradeFunctionalitiesRoles.size', newTradeFunctionalitiesRoles.length);
+
+            //setTradeFunctionalitiesRoles(newTradeFunctionalitiesRoles);
+            tradeFunctionalitiesRoles.splice(index,1);
+            console.log('tradeFunctionalitiesRoles.size', tradeFunctionalitiesRoles.length);
+            setFunctionalitySelected(tradeFunctionalitiesRoles);
             return;  
           }
         });

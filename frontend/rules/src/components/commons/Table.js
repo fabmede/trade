@@ -1,4 +1,4 @@
-import { Button, ButtonGroup } from "react-bootstrap";
+import { ButtonGroup } from "react-bootstrap";
 import BTable from "react-bootstrap/Table";
 import ButtonTableEdit from "./ButtonTableEdit";
 import ButtonTableDetail from "./ButtonTableDetail";
