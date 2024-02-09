@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 
 
 /**
- * The persistent class for the trade_rule database table.
+ * The persistent class for the trade_role database table.
  * 
  */
 @Entity

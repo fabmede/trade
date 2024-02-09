@@ -2,7 +2,7 @@ package com.ft.admin.controller;
 
 import com.ft.admin.dto.TradeUserDto;
 import com.ft.admin.dto.TradeUserTradeGroupDto;
-import com.ft.admin.dto.TradeUserTradeRuleFuncDto;
+import com.ft.admin.dto.TradeUserTradeRoleFuncDto;
 import com.ft.admin.service.TradeUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -28,9 +28,9 @@ public class TradeUserController {
         return ResponseEntity.ok(this.tradeUserService.saveTradeUserTradeGroup(tradeUserTradeGroupDto));
     }
 
-    @PutMapping("/{email}/tradeUserTradeRuleFuncs")
-    public ResponseEntity<TradeUserTradeRuleFuncDto> saveTradeUserTradeRuleFuncs(@RequestBody TradeUserTradeRuleFuncDto tradeUserTradeRuleFuncDto){
-        return ResponseEntity.ok(this.tradeUserService.saveTradeUserTradeRuleFuncs(tradeUserTradeRuleFuncDto));
+    @PutMapping("/{email}/tradeUserTradeRoleFuncs")
+    public ResponseEntity<TradeUserTradeRoleFuncDto> saveTradeUserTradeRoleFuncs(@RequestBody TradeUserTradeRoleFuncDto tradeUserTradeRoleFuncDto){
+        return ResponseEntity.ok(this.tradeUserService.saveTradeUserTradeRoleFuncs(tradeUserTradeRoleFuncDto));
     }
 
     @RequestMapping("/")
@@ -38,9 +38,9 @@ public class TradeUserController {
         return ResponseEntity.ok(this.tradeUserService.findAll());
     }
 
-    @RequestMapping("/{email}/tradeUserTradeRuleFuncs")
-    public ResponseEntity<List<TradeUserTradeRuleFuncDto>> getTradeUserTradeRuleFuncs(@PathVariable String email){
-        return ResponseEntity.ok(this.tradeUserService.findTradeUserTradeRuleFuncsByUserEmail(email));
+    @RequestMapping("/{email}/tradeUserTradeRoleFuncs")
+    public ResponseEntity<List<TradeUserTradeRoleFuncDto>> getTradeUserTradeRoleFuncs(@PathVariable String email){
+        return ResponseEntity.ok(this.tradeUserService.findTradeUserTradeRoleFuncsByUserEmail(email));
     }
 
     @RequestMapping("/{email}/tradeUserTradeGroups")

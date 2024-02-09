@@ -17,7 +17,7 @@ public class BusinessController {
 
 
     @GetMapping("/")
-    public ResponseEntity<List<Business>> getRules(){
+    public ResponseEntity<List<Business>> getRoles(){
         return ResponseEntity.ok(this.businessService.findAll());
     }
 }

@@ -24,10 +24,10 @@ public class TradeGroup implements Serializable {
 
 	private String name;
 
-	//bi-directional many-to-one association to TradeGroupTradeRuleFunc
+	//bi-directional many-to-one association to TradeGroupTradeRoleFunc
 	@OneToMany
 	@JoinColumn(name="trade_group_id")
-	private List<TradeGroupTradeRuleFunc> tradeGroupTradeRuleFuncs;
+	private List<TradeGroupTradeRoleFunc> tradeGroupTradeRoleFuncs;
 
 	public TradeGroup() {
 	}
@@ -56,11 +56,11 @@ public class TradeGroup implements Serializable {
 		this.name = name;
 	}
 
-	public List<TradeGroupTradeRuleFunc> getTradeGroupTradeRuleFuncs() {
-		return this.tradeGroupTradeRuleFuncs;
+	public List<TradeGroupTradeRoleFunc> getTradeGroupTradeRoleFuncs() {
+		return this.tradeGroupTradeRoleFuncs;
 	}
 
-	public void setTradeGroupTradeRuleFuncs(List<TradeGroupTradeRuleFunc> tradeGroupTradeRuleFuncs) {
-		this.tradeGroupTradeRuleFuncs = tradeGroupTradeRuleFuncs;
+	public void setTradeGroupTradeRoleFuncs(List<TradeGroupTradeRoleFunc> tradeGroupTradeRoleFuncs) {
+		this.tradeGroupTradeRoleFuncs = tradeGroupTradeRoleFuncs;
 	}
 }

@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface RuleRepository extends CrudRepository<Business, Long> {
+public interface RoleRepository extends CrudRepository<Business, Long> {
 
     @Override
     List<Business> findAll();

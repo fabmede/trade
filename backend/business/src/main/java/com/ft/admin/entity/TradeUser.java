@@ -26,7 +26,7 @@ public class TradeUser implements Serializable {
 
 	@OneToMany
 	@JoinColumn(name="user_email")
-	private List<TradeUserTradeRuleFunc> tradeUserTradeRuleFuncs;
+	private List<TradeUserTradeRoleFunc> tradeUserTradeRoleFuncs;
 
 	public TradeUser() {
 	}
@@ -55,12 +55,12 @@ public class TradeUser implements Serializable {
 		this.tradeUserTradeGroups = tradeUserTradeGroups;
 	}
 
-	public List<TradeUserTradeRuleFunc> getTradeUserTradeRuleFuncs() {
-		return this.tradeUserTradeRuleFuncs;
+	public List<TradeUserTradeRoleFunc> getTradeUserTradeRoleFuncs() {
+		return this.tradeUserTradeRoleFuncs;
 	}
 
-	public void setTradeUserTradeRuleFuncs(List<TradeUserTradeRuleFunc> tradeUserTradeRuleFuncs) {
-		this.tradeUserTradeRuleFuncs = tradeUserTradeRuleFuncs;
+	public void setTradeUserTradeRoleFuncs(List<TradeUserTradeRoleFunc> tradeUserTradeRoleFuncs) {
+		this.tradeUserTradeRoleFuncs = tradeUserTradeRoleFuncs;
 	}
 
 }

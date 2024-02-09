@@ -1,22 +1,22 @@
 import { useContext } from "react";
 import { ButtonGroup } from "react-bootstrap";
-import { BsEraserFill, BsFillPlusSquareFill, BsSearch } from "react-icons/bs";
-import Button from "react-bootstrap/Button";
 import { ContainerContext } from "../../../commons/utils/ContainerContext";
 import AxiosHttp from "../../../commons/utils/AxiosHttpInterceptor";
+import ButtonSearch from "../ButtonSearch";
+import ButtonCreate from "../ButtonCreate";
+import ButtonClear from "../ButtonClear";
 
 function CrudSearch(props) {
-  
-  const axiosHttp = AxiosHttp(); 
+  const axiosHttp = AxiosHttp();
 
   const { showErrorMessage, showLoading, hiddenLoading } =
     useContext(ContainerContext);
 
-  const clearSearch = () => {
+  const actionOnClickClear = () => {
     props.callBackSearchClear();
   };
 
-  const search = () => {
+  const actionOnClickSearch = () => {
     showLoading();
 
     axiosHttp
@@ -57,23 +57,11 @@ function CrudSearch(props) {
       {props.children[0]}
 
       <ButtonGroup size="sm">
-        <Button variant="primary" type="button" onClick={search}>
-          {" "}
-          <BsSearch />
-          Search
-        </Button>
-        <Button
-          variant="primary"
-          type="link"
+        <ButtonSearch onClick={actionOnClickSearch}></ButtonSearch>
+        <ButtonCreate
           onClick={props.callBackOnClickCreateButton}
-        >
-          {" "}
-          <BsFillPlusSquareFill /> Create
-        </Button>
-        <Button variant="primary" type="button" onClick={clearSearch}>
-          {" "}
-          <BsEraserFill /> Clear{" "}
-        </Button>
+        ></ButtonCreate>
+        <ButtonClear onClick={actionOnClickClear}></ButtonClear>
       </ButtonGroup>
       <hr />
       {props.children[1]}

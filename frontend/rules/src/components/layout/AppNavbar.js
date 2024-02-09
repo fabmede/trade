@@ -23,6 +23,7 @@ import RoleSearch from "../admin/role/RoleSearch";
 import RoleEdit from "../admin/role/RoleEdit";
 import RoleCreate from "../admin/role/RoleCreate";
 import RoleDetail from "../admin/role/RoleDetail";
+import GroupFunctionalityEdit from "../admin/group/GroupFunctionalityEdit";
 
 
 function AppNavbar(props) {
@@ -36,7 +37,7 @@ function AppNavbar(props) {
   return (
     <Router>
       <div>
-        <Navbar bg="dark" expand="lg" variant={"dark"} style={{fontSize : fontNavBar}}>
+        <Navbar bg="dark" expand="lg" variant={"dark"} style={{fontSize : fontNavBar}} fixed="top">
           <Container>
             <Navbar.Brand href="/">
               <img src={logo} alt='AML' width="30" height="30" className="d-inline-block align-top" />
@@ -88,6 +89,8 @@ function AppNavbar(props) {
               <Route path="create" element={<AppContainer customClass="min-height" title="Group" subtitle="Create" > <GroupCreate /> </AppContainer>} />
               <Route path="edit" element={<AppContainer customClass="min-height" title="Group" subtitle="Edit" > <GroupEdit /> </AppContainer>} />
               <Route path="detail" element={<AppContainer customClass="min-height" title="Group" subtitle="Detail" > <GroupDetail /> </AppContainer>} />
+              <Route path="groupTradeRuleFuncs" element={<AppContainer customClass="min-height" title="Group" subtitle="Detail" > <GroupFunctionalityEdit /> </AppContainer>} />
+
             </Route>
 
             <Route path="/admin/functionality/">

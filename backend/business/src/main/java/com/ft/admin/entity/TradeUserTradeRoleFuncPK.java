@@ -4,24 +4,24 @@ import java.io.Serializable;
 import jakarta.persistence.*;
 
 /**
- * The primary key class for the trade_user_trade_rule_func database table.
+ * The primary key class for the trade_user_trade_role_func database table.
  * 
  */
 @Embeddable
-public class TradeUserTradeRuleFuncPK implements Serializable {
+public class TradeUserTradeRoleFuncPK implements Serializable {
 	//default serial version id, required for serializable classes.
 	private static final long serialVersionUID = 1L;
 
 	@Column(name="user_email")
 	private String userEmail;
 
-	@Column(name="trade_rule_id")
-	private Integer tradeRuleId;
+	@Column(name="trade_role_id")
+	private Integer tradeRoleId;
 
 	@Column(name="trade_functionality_id")
 	private Integer tradeFunctionalityId;
 
-	public TradeUserTradeRuleFuncPK() {
+	public TradeUserTradeRoleFuncPK() {
 	}
 	public String getUserEmail() {
 		return this.userEmail;
@@ -29,11 +29,11 @@ public class TradeUserTradeRuleFuncPK implements Serializable {
 	public void setUserEmail(String userEmail) {
 		this.userEmail = userEmail;
 	}
-	public Integer getTradeRuleId() {
-		return this.tradeRuleId;
+	public Integer getTradeRoleId() {
+		return this.tradeRoleId;
 	}
-	public void setTradeRuleId(Integer tradeRuleId) {
-		this.tradeRuleId = tradeRuleId;
+	public void setTradeRoleId(Integer tradeRoleId) {
+		this.tradeRoleId = tradeRoleId;
 	}
 	public Integer getTradeFunctionalityId() {
 		return this.tradeFunctionalityId;
@@ -46,13 +46,13 @@ public class TradeUserTradeRuleFuncPK implements Serializable {
 		if (this == other) {
 			return true;
 		}
-		if (!(other instanceof TradeUserTradeRuleFuncPK)) {
+		if (!(other instanceof TradeUserTradeRoleFuncPK)) {
 			return false;
 		}
-		TradeUserTradeRuleFuncPK castOther = (TradeUserTradeRuleFuncPK)other;
+		TradeUserTradeRoleFuncPK castOther = (TradeUserTradeRoleFuncPK)other;
 		return 
 			this.userEmail.equals(castOther.userEmail)
-			&& this.tradeRuleId.equals(castOther.tradeRuleId)
+			&& this.tradeRoleId.equals(castOther.tradeRoleId)
 			&& this.tradeFunctionalityId.equals(castOther.tradeFunctionalityId);
 	}
 
@@ -60,7 +60,7 @@ public class TradeUserTradeRuleFuncPK implements Serializable {
 		final int prime = 31;
 		int hash = 17;
 		hash = hash * prime + this.userEmail.hashCode();
-		hash = hash * prime + this.tradeRuleId.hashCode();
+		hash = hash * prime + this.tradeRoleId.hashCode();
 		hash = hash * prime + this.tradeFunctionalityId.hashCode();
 		
 		return hash;

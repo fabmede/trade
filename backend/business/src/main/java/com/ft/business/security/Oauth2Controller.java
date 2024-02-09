@@ -45,7 +45,7 @@ public class Oauth2Controller {
 
 
     @GetMapping("/")
-    public ResponseEntity<List<Business>> getRules(){
+    public ResponseEntity<List<Business>> getRoles(){
         return ResponseEntity.ok(this.businessService.findAll());
     }
 }

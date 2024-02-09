@@ -5,29 +5,29 @@ import jakarta.persistence.*;
 
 
 /**
- * The persistent class for the trade_user_trade_rule_func database table.
+ * The persistent class for the trade_user_trade_role_func database table.
  * 
  */
 @Entity
-@Table(name="trade_user_trade_rule_func")
-@NamedQuery(name="TradeUserTradeRuleFunc.findAll", query="SELECT t FROM TradeUserTradeRuleFunc t")
-public class TradeUserTradeRuleFunc implements Serializable {
+@Table(name="trade_user_trade_role_func")
+@NamedQuery(name="TradeUserTradeRoleFunc.findAll", query="SELECT t FROM TradeUserTradeRoleFunc t")
+public class TradeUserTradeRoleFunc implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@EmbeddedId
-	private TradeUserTradeRuleFuncPK id;
+	private TradeUserTradeRoleFuncPK id;
 
 	@Column(name="user_email", insertable=false, updatable=false)
 	private String userEmail;
 
-	public TradeUserTradeRuleFunc() {
+	public TradeUserTradeRoleFunc() {
 	}
 
-	public TradeUserTradeRuleFuncPK getId() {
+	public TradeUserTradeRoleFuncPK getId() {
 		return this.id;
 	}
 
-	public void setId(TradeUserTradeRuleFuncPK id) {
+	public void setId(TradeUserTradeRoleFuncPK id) {
 		this.id = id;
 	}
 

@@ -1,25 +1,19 @@
-import { useState } from "react";
-import Modal from "react-bootstrap/Modal";
 import { ButtonGroup } from "react-bootstrap";
-import { BsArrowReturnLeft, BsSave2 } from "react-icons/bs";
-import Button from "react-bootstrap/Button";
 import { ContainerContext } from "../../../commons/utils/ContainerContext";
 import { useContext } from "react";
 import AxiosHttp from "../../../commons/utils/AxiosHttpInterceptor";
+import { useNavigate } from "react-router-dom";
+import ButtonSave from "../ButtonSave";
+import ButtonBackSearch from "../ButtonBackSearch";
+
 
 function CrudCreate(props) {
 
   const {showSuccessMessage,showErrorMessage} = useContext(ContainerContext);
   const axiosHttp = AxiosHttp(); 
+  const navigate = useNavigate();
 
-  const [showSaveConfirm, setShowSaveConfirm] = useState(false);
-  const handleSaveClose = () => setShowSaveConfirm(false);
-  const handleSaveShow = () => setShowSaveConfirm(true);
-
-  const save = () => {
-
-    console.log('save props.getData()', props.getData());
-    console.log('save props.api', props.api);
+  const actionOnClickSave = () => {
 
     axiosHttp
       .post(props.api, props.getData())
@@ -37,13 +31,15 @@ function CrudCreate(props) {
 
       })
       .finally(() => {
-        setShowSaveConfirm(false);
         if(props.callBackCreateFinally !== undefined && props.callBackCreateFinally instanceof Function){
           props.callBackCreateFinally(); 
         }        
       });
   };
 
+  const actionOnClickBackSearch = () => {
+    navigate(props.routeLink);
+  }
 
   return (
     <>
@@ -51,35 +47,10 @@ function CrudCreate(props) {
       {props.children}
 
       <ButtonGroup size="sm">
-        <Button variant="primary" type="button" onClick={handleSaveShow}>
-          {" "}
-          <BsSave2 /> Save{" "}
-        </Button>
-        <Button
-          variant="primary"
-          type="link"
-          href={props.routeLink}
-        >
-          {" "}
-          <BsArrowReturnLeft /> Return Search
-        </Button>
+        <ButtonSave onClick={actionOnClickSave}></ButtonSave>
+        <ButtonBackSearch onClick={actionOnClickBackSearch}> </ButtonBackSearch>
       </ButtonGroup>
       <hr />
-
-      <Modal show={showSaveConfirm} onHide={handleSaveClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Confirm change register</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>Confirm change register?</Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleSaveClose}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={save}>
-            Save Changes
-          </Button>
-        </Modal.Footer>
-      </Modal>
     </>
   );
 }

@@ -6,7 +6,7 @@ import CrudDetail from "../../commons/crud/CrudDetail";
 function RoleDetail() {
 
   const routeLink = "/admin/role/search"; 
-  const api = 'http://localhost:8090/tradegroups/';
+  const api = 'http://localhost:8090/traderoles/';
   const location = useLocation();
   const id = location.state.tradeRole.id; 
   const name = location.state.tradeRole.name;

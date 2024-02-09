@@ -2,11 +2,11 @@ package com.ft.admin.service;
 
 import com.ft.admin.dto.TradeUserDto;
 import com.ft.admin.dto.TradeUserTradeGroupDto;
-import com.ft.admin.dto.TradeUserTradeRuleFuncDto;
+import com.ft.admin.dto.TradeUserTradeRoleFuncDto;
 import com.ft.admin.entity.*;
 import com.ft.admin.repository.TradeUserRepository;
 import com.ft.admin.repository.TradeUserTradeGroupRepository;
-import com.ft.admin.repository.TradeUserTradeRuleFuncsRepository;
+import com.ft.admin.repository.TradeUserTradeRoleFuncsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,7 +21,7 @@ public class TradeUserService {
     private TradeUserRepository tradeUserRepository;
 
     @Autowired
-    private TradeUserTradeRuleFuncsRepository tradeUserTradeRuleFuncsRepository;
+    private TradeUserTradeRoleFuncsRepository tradeUserTradeRoleFuncsRepository;
 
     @Autowired
     private TradeUserTradeGroupRepository tradeUserTradeGroupRepository;
@@ -32,10 +32,10 @@ public class TradeUserService {
         return listTradeUserDto;
     }
 
-    public List<TradeUserTradeRuleFuncDto> findTradeUserTradeRuleFuncsByUserEmail(String email) {
-        List<TradeUserTradeRuleFunc>  tradeUserTradeRuleFunc = this.tradeUserTradeRuleFuncsRepository.findByUserEmail(email);
-        List<TradeUserTradeRuleFuncDto>  tradeUserTradeRuleFuncDtos = tradeUserTradeRuleFunc.stream().map( el -> new TradeUserTradeRuleFuncDto(el.getId().getUserEmail(),el.getId().getTradeRuleId(), el.getId().getTradeFunctionalityId())).collect(Collectors.toList());
-        return tradeUserTradeRuleFuncDtos;
+    public List<TradeUserTradeRoleFuncDto> findTradeUserTradeRoleFuncsByUserEmail(String email) {
+        List<TradeUserTradeRoleFunc>  tradeUserTradeRoleFunc = this.tradeUserTradeRoleFuncsRepository.findByUserEmail(email);
+        List<TradeUserTradeRoleFuncDto>  tradeUserTradeRoleFuncDtos = tradeUserTradeRoleFunc.stream().map( el -> new TradeUserTradeRoleFuncDto(el.getId().getUserEmail(),el.getId().getTradeRoleId(), el.getId().getTradeFunctionalityId())).collect(Collectors.toList());
+        return tradeUserTradeRoleFuncDtos;
     }
 
     public List<TradeUserTradeGroupDto> findTradeUserTradeGroupByEmail(String email){
@@ -64,13 +64,13 @@ public class TradeUserService {
     }
 
     @Transactional
-    public TradeUserTradeRuleFuncDto saveTradeUserTradeRuleFuncs(TradeUserTradeRuleFuncDto tradeUserTradeGroupDto){
-        TradeUserTradeRuleFunc tradeUserTradeRuleFunc = new TradeUserTradeRuleFunc();
-        tradeUserTradeRuleFunc.setId(new TradeUserTradeRuleFuncPK());
-        tradeUserTradeRuleFunc.getId().setTradeRuleId(tradeUserTradeGroupDto.getTradeRuleId());
-        tradeUserTradeRuleFunc.getId().setUserEmail(tradeUserTradeGroupDto.getUserEmail());
-        tradeUserTradeRuleFunc.getId().setTradeFunctionalityId(tradeUserTradeGroupDto.getTradeFunctionalityId());
-        this.tradeUserTradeRuleFuncsRepository.save(tradeUserTradeRuleFunc);
+    public TradeUserTradeRoleFuncDto saveTradeUserTradeRoleFuncs(TradeUserTradeRoleFuncDto tradeUserTradeGroupDto){
+        TradeUserTradeRoleFunc tradeUserTradeRoleFunc = new TradeUserTradeRoleFunc();
+        tradeUserTradeRoleFunc.setId(new TradeUserTradeRoleFuncPK());
+        tradeUserTradeRoleFunc.getId().setTradeRoleId(tradeUserTradeGroupDto.getTradeRoleId());
+        tradeUserTradeRoleFunc.getId().setUserEmail(tradeUserTradeGroupDto.getUserEmail());
+        tradeUserTradeRoleFunc.getId().setTradeFunctionalityId(tradeUserTradeGroupDto.getTradeFunctionalityId());
+        this.tradeUserTradeRoleFuncsRepository.save(tradeUserTradeRoleFunc);
         return tradeUserTradeGroupDto;
     }
 }

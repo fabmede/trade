@@ -18,9 +18,11 @@ public class TradeFunctionality implements Serializable {
 	@SequenceGenerator(name = "trade_functionality_seq", sequenceName = "trade_functionality_seq", initialValue = 1, allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "trade_functionality_seq")	
 	private Integer id;
-	
+
+	@Column
 	private String description;
 
+	@Column
 	private String name;
 
 	public TradeFunctionality() {
@@ -49,5 +51,6 @@ public class TradeFunctionality implements Serializable {
 	public void setName(String name) {
 		this.name = name;
 	}
+
 
 }

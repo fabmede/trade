@@ -1,9 +1,12 @@
 import axios from "axios";
 import { useContext } from "react";
 import { AppContext } from "./AppContext";
+import { ContainerContext } from "./ContainerContext";
 
 function AxiosHttp() {
   const { getUserLooged } = useContext(AppContext);
+  const { showErrorMessage } = useContext(ContainerContext);
+
   const axiosHttp = axios.create({});
 
   axiosHttp.interceptors.request.use(
@@ -19,12 +22,13 @@ function AxiosHttp() {
     }
   );
 
-  axios.interceptors.response.use(
+  axiosHttp.interceptors.response.use(
     response => response,
     error => {
       console.log('Sessão expirada', error);
 
       if (error.response.status === 401) {
+        showErrorMessage('Session Expired, please login again!');
         console.log('Sessão expirada');
       }
     });

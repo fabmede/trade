@@ -31,22 +31,19 @@ public class JwtTokenFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest req, HttpServletResponse res, FilterChain chain) throws ServletException, IOException {
-        try {
 
-            String token = getToken(req);
-            ResponseEntity<Map> googleToken = this.getGoogleUserInfo(token);
+        String token = getToken(req);
+        ResponseEntity<Map> googleToken = this.getGoogleUserInfo(token);
 
-            if (googleToken.getStatusCode() == HttpStatusCode.valueOf(HttpStatus.OK.value())) {
-                UserDetails userDetails = userDetailsServiceImpl.loadUserByUsername(null);
-                UsernamePasswordAuthenticationToken auth =
-                        new UsernamePasswordAuthenticationToken(googleToken, null, userDetails.getAuthorities());
-                SecurityContextHolder.getContext().setAuthentication(auth);
-            } else {
-                logger.error("Failure on validate token!");
-            }
-        }catch (Exception e){
+        if (googleToken.getStatusCode() == HttpStatusCode.valueOf(HttpStatus.OK.value())) {
+            UserDetails userDetails = userDetailsServiceImpl.loadUserByUsername(null);
+            UsernamePasswordAuthenticationToken auth =
+                    new UsernamePasswordAuthenticationToken(googleToken, null, userDetails.getAuthorities());
+            SecurityContextHolder.getContext().setAuthentication(auth);
+        } else {
             logger.error("Failure on validate token!");
         }
+
         chain.doFilter(req, res);
     }
 

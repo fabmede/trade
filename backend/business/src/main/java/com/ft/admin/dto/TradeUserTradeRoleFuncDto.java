@@ -1,10 +1,10 @@
 package com.ft.admin.dto;
 
 
-public class TradeUserTradeRuleFuncDto {
+public class TradeUserTradeRoleFuncDto {
 
     private String userEmail;
-    private Integer tradeRuleId;
+    private Integer tradeRoleId;
     private Integer tradeFunctionalityId;
 
     public String getUserEmail() {
@@ -15,12 +15,12 @@ public class TradeUserTradeRuleFuncDto {
         this.userEmail = userEmail;
     }
 
-    public Integer getTradeRuleId() {
-        return tradeRuleId;
+    public Integer getTradeRoleId() {
+        return tradeRoleId;
     }
 
-    public void setTradeRuleId(Integer tradeRuleId) {
-        this.tradeRuleId = tradeRuleId;
+    public void setTradeRoleId(Integer tradeRoleId) {
+        this.tradeRoleId = tradeRoleId;
     }
 
     public Integer getTradeFunctionalityId() {
@@ -31,9 +31,9 @@ public class TradeUserTradeRuleFuncDto {
         this.tradeFunctionalityId = tradeFunctionalityId;
     }
 
-    public TradeUserTradeRuleFuncDto(String userEmail, Integer tradeRuleId, Integer tradeFunctionalityId) {
+    public TradeUserTradeRoleFuncDto(String userEmail, Integer tradeRoleId, Integer tradeFunctionalityId) {
         this.userEmail = userEmail;
-        this.tradeRuleId = tradeRuleId;
+        this.tradeRoleId = tradeRoleId;
         this.tradeFunctionalityId = tradeFunctionalityId;
     }
 }

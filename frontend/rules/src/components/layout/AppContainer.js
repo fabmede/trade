@@ -8,7 +8,7 @@ function AppContainer(props) {
         textAlign: "left",
         marginLeft: "10%",
         marginRight: "10%",
-        marginTop: "2%",
+        marginTop: "4%",
       }}
     >
       <Container fluid="sm">
