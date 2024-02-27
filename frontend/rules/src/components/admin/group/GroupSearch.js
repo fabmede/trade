@@ -52,8 +52,7 @@ function GroupSearch() {
       callBackSearchSuccess={callBackSearchSuccess}
       callBackSearchClear={callBackSearchClear}
       callBackSearchError={callBackSearchError}
-      callBackOnClickCreateButton={callBackOnClickCreateButton}
-      
+      callBackOnClickCreateButton={callBackOnClickCreateButton}      
     >
       <CrudSearch.Search>
         <Form.Group className="mb-3" controlId="tradegroups.nameId">
@@ -72,7 +71,7 @@ function GroupSearch() {
           callBackOnClickEditButton={callBackOnClickEditButton}
           columns={columns}
           callBackOnClickDetailButton={callBackOnClickDetailButton}
-          hiddenButtonCrudDelete={true}
+          hideCrudTableButonDelete={true}
         ></Table>
       </CrudSearch.Result>
     </CrudSearch>

@@ -23,7 +23,7 @@ function ButtonDelete(props) {
         variant="primary"
         type="button"
         onClick={handleDeleteShow}
-        hidden={props.hiddenButtonCrudDelete}
+        hidden={props.hidden}
       >
         {" "}
         <BsTrash2 />

@@ -9,7 +9,7 @@ import ButtonClear from "../ButtonClear";
 function CrudSearch(props) {
   const axiosHttp = AxiosHttp();
 
-  const { showErrorMessage, showLoading, hiddenLoading } =
+  const { showErrorMessage } =
     useContext(ContainerContext);
 
   const actionOnClickClear = () => {
@@ -17,7 +17,6 @@ function CrudSearch(props) {
   };
 
   const actionOnClickSearch = () => {
-    showLoading();
 
     axiosHttp
       .get(props.api)
@@ -42,7 +41,6 @@ function CrudSearch(props) {
         }
       })
       .finally(() => {
-        hiddenLoading();
         if (
           props.callBackSearchFinally !== undefined &&
           props.callBackSearchFinally instanceof Function

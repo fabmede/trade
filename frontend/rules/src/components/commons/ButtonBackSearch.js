@@ -18,6 +18,7 @@ function ButtonBackSearch(props) {
         variant="primary"
         type="link"
         onClick={onClick}
+        hidden={props.hidden}
       >
         {" "}
         <BsArrowReturnLeft />

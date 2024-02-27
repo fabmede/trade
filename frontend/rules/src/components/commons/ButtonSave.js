@@ -1,15 +1,19 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Modal from "react-bootstrap/Modal";
 import { BsSave2 } from "react-icons/bs";
 import Button from "react-bootstrap/Button";
+import { ContainerContext } from "../../commons/utils/ContainerContext";
 
 function ButtonSave(props) {
 
   const [showSaveConfirm, setShowSaveConfirm] = useState(false);
   const handleSaveClose = () => setShowSaveConfirm(false);
   const handleSaveShow = () => setShowSaveConfirm(true);
+  const { showLoading } =
+  useContext(ContainerContext);
 
   const onClickSave = () => {
+    showLoading();
     if (props.onClick === undefined) {
       console.log("There in no onClickSave to call");
     } else {
@@ -24,7 +28,7 @@ function ButtonSave(props) {
         variant="primary"
         type="button"
         onClick={handleSaveShow}
-        hidden={props.hiddenButtonCrudSave}
+        hidden={props.hidden}
       >
         {" "}
         <BsSave2 />

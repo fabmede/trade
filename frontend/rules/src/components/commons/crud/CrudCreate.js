@@ -43,14 +43,12 @@ function CrudCreate(props) {
 
   return (
     <>
-
-      {props.children}
-
       <ButtonGroup size="sm">
         <ButtonSave onClick={actionOnClickSave}></ButtonSave>
         <ButtonBackSearch onClick={actionOnClickBackSearch}> </ButtonBackSearch>
       </ButtonGroup>
       <hr />
+      {props.children}
     </>
   );
 }

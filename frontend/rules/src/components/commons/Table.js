@@ -26,7 +26,7 @@ function Table(props) {
           <tr key={1}>
             <th
               style={{ width: "10px", textAlign: "center" }}
-              hidden={props.hideCrudTableButom}
+              hidden={props.hideCrudTableButtons}
             >
               {" "}
               Actions
@@ -39,7 +39,7 @@ function Table(props) {
         <tbody>
           {props.data.map((data, index_row) => (
             <tr key={index_row}>
-              <td align="center" hidden={props.hideCrudTableButom}>
+              <td align="center" hidden={props.hideCrudTableButtons}>
                 <ButtonGroup size="sm">
                   <ButtonTableEdit
                     onClick={props.callBackOnClickEditButton}
@@ -54,7 +54,7 @@ function Table(props) {
                   <ButtonTableDelete
                     onClick={props.callBackOnClickRemoveButton}
                     onClickParam={data}
-                    hidden={props.hiddenButtonCrudDelete}
+                    hidden={props.hideCrudTableButonDelete}
                   ></ButtonTableDelete>
                 </ButtonGroup>
               </td>

@@ -113,28 +113,23 @@ function GroupFunctionalityEdit(props) {
         { data: pCurrentTradeGroup }
       )
       .then((res) => {
+        const deleteByIds = (tradeFunctionalityDtoId, tradeRoleDtoId) => {
+          setTradeFunctionalitiesRoles((oldValues) => {
+            return oldValues.filter(
+              (element) =>
+              {
+                let elementId = element.tradeFunctionalityDto.id + "_" + element.tradeRoleDto.id; 
+                let parameterId = tradeFunctionalityDtoId + "_" + tradeRoleDtoId; 
+                return parameterId !== elementId;
+              }
+            );
+          });
+        };
 
-        let tradeFunctionalitiesRolesAux = tradeFunctionalitiesRoles;
-        tradeFunctionalitiesRolesAux.forEach((element, index) => {
-          console.log('Elemento', element);
-          console.log('index', index);
-
-          if (
-            element.tradeFunctionalityDto.id ===
-              pCurrentTradeGroup.tradeFunctionalityDto.id &&
-            element.tradeRoleDto.id === pCurrentTradeGroup.tradeRoleDto.id
-          ) {
-            console.log('tradeFunctionalitiesRoles.size', tradeFunctionalitiesRoles.length);
-            //const newTradeFunctionalitiesRoles = tradeFunctionalitiesRoles.splice(index,1);
-            //console.log('newTradeFunctionalitiesRoles.size', newTradeFunctionalitiesRoles.length);
-
-            //setTradeFunctionalitiesRoles(newTradeFunctionalitiesRoles);
-            tradeFunctionalitiesRoles.splice(index,1);
-            console.log('tradeFunctionalitiesRoles.size', tradeFunctionalitiesRoles.length);
-            setFunctionalitySelected(tradeFunctionalitiesRoles);
-            return;  
-          }
-        });
+        deleteByIds(
+          pCurrentTradeGroup.tradeFunctionalityDto.id,
+          pCurrentTradeGroup.tradeRoleDto.id
+        );
       })
       .catch((err) => {
         console.error("Error delete", err);

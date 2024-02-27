@@ -18,9 +18,8 @@ public class JwtEntryPoint implements AuthenticationEntryPoint {
 
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException e) throws IOException, ServletException {
-        logger.error("Token validate failure.");
-        response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Token validate failure.");
-
+        logger.error("Error", e);
+        //response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Token validate failure.");
     }
 
 }

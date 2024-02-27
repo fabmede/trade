@@ -4,7 +4,6 @@ import com.ft.admin.dto.TradeGroupDto;
 import com.ft.admin.dto.TradeGroupTradeRoleFuncDto;
 import com.ft.admin.entity.TradeGroup;
 import com.ft.admin.entity.TradeGroupTradeRoleFunc;
-import com.ft.admin.entity.TradeGroupTradeRoleFuncPK;
 import com.ft.admin.service.TradeGroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

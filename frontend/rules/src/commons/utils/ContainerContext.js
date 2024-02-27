@@ -13,6 +13,7 @@ export const ContainerProvider = ({ children }) => {
   });
 
   const [hidden, setHidden] = useState(true);
+  const [showAlert, setShowAlert] = useState(false);
 
   const showSuccessMessage = (message) => {
     setMessage({
@@ -25,6 +26,7 @@ export const ContainerProvider = ({ children }) => {
   };
 
   const showErrorMessage = (message) => {
+    setShowAlert(true);
     setMessage({
       visible: true,
       detail: {
@@ -32,6 +34,9 @@ export const ContainerProvider = ({ children }) => {
         message: message,
       },
     });
+
+    window.setTimeout(()=>{setShowAlert(false)},8000);
+
   };
 
   const showLoading = () => {
@@ -45,6 +50,7 @@ export const ContainerProvider = ({ children }) => {
   const showContent = () => {
     return !hidden ? "none" : "block";
   };
+
 
   return (
     <ContainerContext.Provider
@@ -69,7 +75,8 @@ export const ContainerProvider = ({ children }) => {
 
       <div style={{ display: showContent() }}>
         {message.visible ? (
-          <Alert key={message.detail.type} variant={message.detail.type}>
+          <Alert key={message.detail.type} variant={message.detail.type}
+          show={showAlert}>
             {message.detail.message}
           </Alert>
         ) : (
