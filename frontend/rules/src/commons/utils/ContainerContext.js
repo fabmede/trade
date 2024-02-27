@@ -16,6 +16,9 @@ export const ContainerProvider = ({ children }) => {
   const [showAlert, setShowAlert] = useState(false);
 
   const showSuccessMessage = (message) => {
+
+    setShowAlert(true);
+
     setMessage({
       visible: true,
       detail: {
@@ -23,6 +26,9 @@ export const ContainerProvider = ({ children }) => {
         message: message,
       },
     });
+
+    window.setTimeout(()=>{setShowAlert(false)},8000);
+
   };
 
   const showErrorMessage = (message) => {

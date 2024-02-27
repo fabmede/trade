@@ -5,19 +5,23 @@ import AxiosHttp from "../../../commons/utils/AxiosHttpInterceptor";
 import ButtonSearch from "../ButtonSearch";
 import ButtonCreate from "../ButtonCreate";
 import ButtonClear from "../ButtonClear";
+import Table from "../Table";
 
 function CrudSearch(props) {
+  return <>{props.children}</>;
+}
+
+function Search(props) {
   const axiosHttp = AxiosHttp();
 
-  const { showErrorMessage } =
-    useContext(ContainerContext);
+  const { showErrorMessage } = useContext(ContainerContext);
 
   const actionOnClickClear = () => {
+    console.log("actionOnClickClear");
     props.callBackSearchClear();
   };
 
   const actionOnClickSearch = () => {
-
     axiosHttp
       .get(props.api)
       .then((res) => {
@@ -52,8 +56,8 @@ function CrudSearch(props) {
 
   return (
     <>
-      {props.children[0]}
-
+      {" "}
+      {props.children}
       <ButtonGroup size="sm">
         <ButtonSearch onClick={actionOnClickSearch}></ButtonSearch>
         <ButtonCreate
@@ -62,13 +66,27 @@ function CrudSearch(props) {
         <ButtonClear onClick={actionOnClickClear}></ButtonClear>
       </ButtonGroup>
       <hr />
-      {props.children[1]}
     </>
   );
 }
 
-const Search = ({ children }) => <>{children}</>;
-const Result = ({ children }) => <>{children}</>;
+function Result(props) {
+  return (
+    <>
+      {props.usingTable !== undefined ? (
+        <Table
+          data={props.data}
+          callBackOnClickEditButton={props.callBackOnClickEditButton}
+          columns={props.columns}
+          callBackOnClickDetailButton={props.callBackOnClickDetailButton}
+          hideCrudTableButonDelete={true}
+        ></Table>
+      ) : (
+        props.children
+      )}
+    </>
+  );
+}
 
 CrudSearch.Search = Search;
 CrudSearch.Result = Result;

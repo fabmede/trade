@@ -2,7 +2,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Form from "react-bootstrap/Form";
 import React, { useState } from "react";
 import CrudSearch from "../../commons/crud/CrudSearch";
-import Table from "../../commons/Table";
 import { useNavigate } from "react-router-dom";
 
 function GroupSearch() {
@@ -44,17 +43,17 @@ function GroupSearch() {
 
   const callBackOnClickCreateButton = () => {
     navigate("/admin/group/create");
-  };  
+  };
 
   return (
-    <CrudSearch
-      api={api}
-      callBackSearchSuccess={callBackSearchSuccess}
-      callBackSearchClear={callBackSearchClear}
-      callBackSearchError={callBackSearchError}
-      callBackOnClickCreateButton={callBackOnClickCreateButton}      
-    >
-      <CrudSearch.Search>
+    <CrudSearch>
+      <CrudSearch.Search
+        api={api}
+        callBackSearchSuccess={callBackSearchSuccess}
+        callBackSearchClear={callBackSearchClear}
+        callBackSearchError={callBackSearchError}
+        callBackOnClickCreateButton={callBackOnClickCreateButton}
+      >
         <Form.Group className="mb-3" controlId="tradegroups.nameId">
           <Form.Label size="sm">Name</Form.Label>
           <Form.Control size="sm" type="text" placeholder="Enter name" />
@@ -65,15 +64,13 @@ function GroupSearch() {
         </Form.Group>
       </CrudSearch.Search>
 
-      <CrudSearch.Result>
-        <Table
-          data={tradeGroups}
-          callBackOnClickEditButton={callBackOnClickEditButton}
-          columns={columns}
-          callBackOnClickDetailButton={callBackOnClickDetailButton}
-          hideCrudTableButonDelete={true}
-        ></Table>
-      </CrudSearch.Result>
+      <CrudSearch.Result
+        data={tradeGroups}
+        callBackOnClickEditButton={callBackOnClickEditButton}
+        columns={columns}
+        callBackOnClickDetailButton={callBackOnClickDetailButton}
+        usingTable={true}
+      ></CrudSearch.Result>
     </CrudSearch>
   );
 }

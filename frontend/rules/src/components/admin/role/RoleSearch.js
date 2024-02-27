@@ -32,7 +32,7 @@ function RoleSearch() {
 
   const callBackOnClickEditButton = (data) => {
     navigate("/admin/role/edit", {
-      state: { tradeRole :data },
+      state: { tradeRole: data },
     });
   };
 
@@ -44,17 +44,17 @@ function RoleSearch() {
 
   const callBackOnClickCreateButton = () => {
     navigate("/admin/role/create");
-  };  
+  };
 
   return (
-    <CrudSearch
-      api={api}
-      callBackSearchSuccess={callBackSearchSuccess}
-      callBackSearchClear={callBackSearchClear}
-      callBackSearchError={callBackSearchError}
-      callBackOnClickCreateButton={callBackOnClickCreateButton}
-    >
-      <CrudSearch.Search>
+    <CrudSearch>
+      <CrudSearch.Search
+        api={api}
+        callBackSearchSuccess={callBackSearchSuccess}
+        callBackSearchClear={callBackSearchClear}
+        callBackSearchError={callBackSearchError}
+        callBackOnClickCreateButton={callBackOnClickCreateButton}
+      >
         <Form.Group className="mb-3" controlId="tradegroups.nameId">
           <Form.Label size="sm">Name</Form.Label>
           <Form.Control size="sm" type="text" placeholder="Enter name" />
@@ -65,14 +65,14 @@ function RoleSearch() {
         </Form.Group>
       </CrudSearch.Search>
 
-      <CrudSearch.Result>
-        <Table
-          data={tradeRoles}
-          callBackOnClickEditButton={callBackOnClickEditButton}
-          columns={columns}
-          callBackOnClickDetailButton={callBackOnClickDetailButton}
-        ></Table>
-      </CrudSearch.Result>
+      <CrudSearch.Result
+        data={tradeRoles}
+        callBackOnClickEditButton={callBackOnClickEditButton}
+        columns={columns}
+        callBackOnClickDetailButton={callBackOnClickDetailButton}
+        usingTable={true}
+      ></CrudSearch.Result>
+
     </CrudSearch>
   );
 }
