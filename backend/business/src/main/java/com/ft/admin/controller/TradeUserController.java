@@ -23,6 +23,12 @@ public class TradeUserController {
         return ResponseEntity.ok(this.tradeUserService.saveTradeUser(tradeUserDto));
     }
 
+    @PutMapping("/{email}")
+    public ResponseEntity<TradeUserDto> update(@RequestBody TradeUserDto tradeUserDto, @PathVariable String email) {
+        tradeUserDto.setEmail(email);
+        return ResponseEntity.ok(this.tradeUserService.updateTradeUser(tradeUserDto));
+    }
+
     @PutMapping("/{email}/tradeUserTradeGroups")
     public ResponseEntity<TradeUserTradeGroupDto> saveTradeUserTradeGroup(@RequestBody TradeUserTradeGroupDto tradeUserTradeGroupDto){
         return ResponseEntity.ok(this.tradeUserService.saveTradeUserTradeGroup(tradeUserTradeGroupDto));

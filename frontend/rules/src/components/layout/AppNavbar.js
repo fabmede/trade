@@ -10,7 +10,7 @@ import AppContainer from "./AppContainer";
 import logo from '../../img/logo.png'
 import Profile from "./Profile";
 import Business from "../registers/business/Business";
-import User from "../admin/user/User";
+import UserSearch from "../admin/user/UserSearch";
 import GroupSearch from "../admin/group/GroupSearch";
 import FunctionalitySearch from "../admin/functionality/FunctionalitySearch";
 import FunctionalityCreate from "../admin/functionality/FunctionalityCreate";
@@ -24,6 +24,9 @@ import RoleEdit from "../admin/role/RoleEdit";
 import RoleCreate from "../admin/role/RoleCreate";
 import RoleDetail from "../admin/role/RoleDetail";
 import GroupFunctionalityEdit from "../admin/group/GroupFunctionalityEdit";
+import UserDetail from "../admin/user/UserDetail";
+import UserCreate from "../admin/user/UserCreate";
+import UserEdit from "../admin/user/UserEdit";
 
 
 function AppNavbar(props) {
@@ -51,7 +54,7 @@ function AppNavbar(props) {
                 </NavDropdown>
 
                 <NavDropdown title="Administrator" id="basic-nav-dropdown" >
-                  <NavDropdown.Item href="/admin/user" style={{fontSize : fontMenuItemSize}}>User</NavDropdown.Item>
+                  <NavDropdown.Item href="/admin/user/search" style={{fontSize : fontMenuItemSize}}>User</NavDropdown.Item>
                   <NavDropdown.Item href="/admin/group/search" style={{fontSize : fontMenuItemSize}}>Group Access</NavDropdown.Item>
                   <NavDropdown.Item href="/admin/functionality/search" style={{fontSize : fontMenuItemSize}}>Functionality</NavDropdown.Item>
                   <NavDropdown.Item href="/admin/role/search" style={{fontSize : fontMenuItemSize}}>Role</NavDropdown.Item>
@@ -82,15 +85,19 @@ function AppNavbar(props) {
             <Route path="/profile" element={<AppContainer customClass="min-height" title="Profile" > <Profile /> </AppContainer>} />
             <Route path="/registers/business" element={<AppContainer customClass="min-height" title="Business" > <Business /> </AppContainer>} />
 
-            <Route path="/admin/user" element={<AppContainer customClass="min-height" title="User" > <User/> </AppContainer>} />
-            
+            <Route path="/admin/user/">
+              <Route path="search" element={<AppContainer customClass="min-height" title="User" subtitle="Search" > <UserSearch /> </AppContainer>} />
+              <Route path="create" element={<AppContainer customClass="min-height" title="User" subtitle="Create" > <UserCreate /> </AppContainer>} />
+              <Route path="edit" element={<AppContainer customClass="min-height" title="User" subtitle="Edit" > <UserEdit /> </AppContainer>} />
+              <Route path="detail" element={<AppContainer customClass="min-height" title="User" subtitle="Detail" > <UserDetail /> </AppContainer>} />
+            </Route>
+
             <Route path="/admin/group/">
               <Route path="search" element={<AppContainer customClass="min-height" title="Group" subtitle="Search" > <GroupSearch /> </AppContainer>} />
               <Route path="create" element={<AppContainer customClass="min-height" title="Group" subtitle="Create" > <GroupCreate /> </AppContainer>} />
               <Route path="edit" element={<AppContainer customClass="min-height" title="Group" subtitle="Edit" > <GroupEdit /> </AppContainer>} />
               <Route path="detail" element={<AppContainer customClass="min-height" title="Group" subtitle="Detail" > <GroupDetail /> </AppContainer>} />
               <Route path="groupTradeRuleFuncs" element={<AppContainer customClass="min-height" title="Group" subtitle="Detail" > <GroupFunctionalityEdit /> </AppContainer>} />
-
             </Route>
 
             <Route path="/admin/functionality/">
@@ -105,7 +112,6 @@ function AppNavbar(props) {
               <Route path="create" element={<AppContainer customClass="min-height" title="Role" subtitle="Create" > <RoleCreate /> </AppContainer>} />
               <Route path="edit" element={<AppContainer customClass="min-height" title="Role" subtitle="Edit" > <RoleEdit /> </AppContainer>} />
               <Route path="detail" element={<AppContainer customClass="min-height" title="Role" subtitle="Detail" > <RoleDetail /> </AppContainer>} />
-
             </Route>
 
           </Routes>

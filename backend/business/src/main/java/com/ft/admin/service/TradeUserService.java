@@ -1,5 +1,6 @@
 package com.ft.admin.service;
 
+import com.ft.admin.dto.TradeGroupDto;
 import com.ft.admin.dto.TradeUserDto;
 import com.ft.admin.dto.TradeUserTradeGroupDto;
 import com.ft.admin.dto.TradeUserTradeRoleFuncDto;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -72,5 +74,19 @@ public class TradeUserService {
         tradeUserTradeRoleFunc.getId().setTradeFunctionalityId(tradeUserTradeGroupDto.getTradeFunctionalityId());
         this.tradeUserTradeRoleFuncsRepository.save(tradeUserTradeRoleFunc);
         return tradeUserTradeGroupDto;
+    }
+
+     @Transactional
+    public TradeUserDto updateTradeUser(TradeUserDto tradeUserDto) {
+        Optional<TradeUser> oTradeUser = this.tradeUserRepository.findById(tradeUserDto.getEmail());
+
+        if (!oTradeUser.isPresent()) {
+            throw new RuntimeException("There is no register to update");
+        }
+
+        TradeUser tradeUser = oTradeUser.get();
+        tradeUser.setName(tradeUserDto.getName());
+        tradeUser = this.tradeUserRepository.save(tradeUser);
+        return new TradeUserDto(tradeUser.getEmail(), tradeUser.getName());
     }
 }
