@@ -1,54 +1,51 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import Form from "react-bootstrap/Form";
 import { useLocation } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CrudEdit from "../../commons/crud/CrudEdit";
+import FormImputText from "../../commons/FormImputText";
 
 function UserEdit() {
 
-  const routeLink = "/admin/user/search"; 
-  const api = 'http://localhost:8090/tradeusers/';
+  const routeLink = "/admin/user/search";
+  const api = "http://localhost:8090/tradeusers/";
   const location = useLocation();
-  const id = location.state.tradeUser.email; 
-  const [name, setName] = useState(location.state.tradeUser.name);
-  const [email, setEmail] = useState(
-    location.state.tradeUser.email
-  );
+  const id = location.state.tradeUser.email;
+  const [editObject, setEditObject] = useState(location.state.tradeUser);
+
+  const callBackEditSuccess = (callBackEditSuccess) => {
+    console.log("Calling callBackEditSuccess");
+  };
 
   const getData = () => {
-    return {
-      name : name,
-      email : email
-    }
+    return editObject; 
   }
 
-  const callBackEditSuccess = (callBackEditSuccess)  => {
-    console.log('Calling callBackEditSuccess');
-  }
   return (
     <>
-      <CrudEdit api={api} id={id} getData={getData} routeLink={routeLink} callBackEditSuccess={callBackEditSuccess}>
+      <CrudEdit
+        api={api}
+        id={id}
+        getData={getData}
+        routeLink={routeLink}
+        callBackEditSuccess={callBackEditSuccess}
+      >
         <Form>
-          <Form.Group className="mb-3" controlId="tradeUser.emailId">
-            <Form.Label size="sm">Email</Form.Label>
-            <Form.Control
-              size="sm"
-              type="text"
-              placeholder="Enter with the email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="tradeUser.nameId">
-            <Form.Label size="sm">Name</Form.Label>
-            <Form.Control
-              size="sm"
-              type="text"
-              placeholder="Enter with the name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
-          </Form.Group>
+          <FormImputText
+            label="Email"
+            placeholder="Enter with the email"
+            attributeName="email"
+            setObjectAttributes={setEditObject}
+            objectAttributes={editObject}
+          ></FormImputText>
+
+          <FormImputText
+            label="Name"
+            placeholder="Enter with the name"
+            attributeName="name"
+            setObjectAttributes={setEditObject}
+            objectAttributes={editObject}
+          ></FormImputText>
         </Form>
       </CrudEdit>
     </>

@@ -53,4 +53,10 @@ public class TradeUserController {
     public ResponseEntity<List<TradeUserTradeGroupDto>> getTradeUserTradeGroups(@PathVariable String email){
         return ResponseEntity.ok(this.tradeUserService.findTradeUserTradeGroupByEmail(email));
     }
+
+    @DeleteMapping("/{email}")
+    public ResponseEntity<String> delete(@PathVariable String email){
+        this.tradeUserService.deleteTradeUser(email);
+        return ResponseEntity.ok().body(null);
+    }
 }

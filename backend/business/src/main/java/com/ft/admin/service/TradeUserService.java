@@ -89,4 +89,16 @@ public class TradeUserService {
         tradeUser = this.tradeUserRepository.save(tradeUser);
         return new TradeUserDto(tradeUser.getEmail(), tradeUser.getName());
     }
+
+    @Transactional
+    public void deleteTradeUser(String email){
+        Optional<TradeUser> oTradeUser = this.tradeUserRepository.findById(email);
+
+        if (!oTradeUser.isPresent()) {
+            throw new RuntimeException("There is no register to update");
+        }
+
+        TradeUser tradeUser = oTradeUser.get();
+        this.tradeUserRepository.delete(tradeUser);
+    }  
 }
