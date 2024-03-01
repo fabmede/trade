@@ -13,10 +13,7 @@ function UserCreate() {
   const [createObject, setCreateObject] = useState({});
 
   const getData = () => {
-    return {
-      name: createObject.name,
-      email: createObject.email,
-    };
+    return createObject;
   };
 
   const callBackCreateSuccess = (res) => {

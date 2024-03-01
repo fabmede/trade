@@ -31,7 +31,6 @@ function GroupFunctionalityEdit(props) {
   }, []);
 
   const loadTradeGroupTradeRolesFunctionaliesRoles = () => {
-    console.log("currentTradeGroup", currentTradeGroup);
     axiosHttp
       .get(tradeGroupsApi + currentTradeGroup.id + "/tradeGroupTradeRoleFuncs")
       .then((res) => {

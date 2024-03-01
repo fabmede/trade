@@ -3,52 +3,50 @@ import Form from "react-bootstrap/Form";
 import CrudCreate from "../../commons/crud/CrudCreate";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import FormImputText from "../../commons/FormImputText";
 
 function FunctionalityCreate() {
-
   const api = "http://localhost:8090/tradefunctionalities/";
-  const routeLink = "/admin/functionality/search"; 
-  const successCreateLink = '/admin/functionality/detail';
+  const routeLink = "/admin/functionality/search";
+  const successCreateLink = "/admin/functionality/detail";
   const navigate = useNavigate();
 
-  const [name, setName] = useState();
-  const [description, setDescription] = useState();
+  const [createObject, setCreateObject] = useState({});
 
   const getData = () => {
-    return {
-      name: name,
-      description: description,
-    };
+    return createObject;
   };
 
   const callBackCreateSuccess = (res) => {
     let functionality = {
-      functionality :  res.data
-    }
-    navigate(successCreateLink, { state: functionality }); 
-  }
+      functionality: res.data,
+    };
+    navigate(successCreateLink, { state: functionality });
+  };
 
   return (
-    <CrudCreate api={api} getData={getData} routeLink={routeLink}  callBackCreateSuccess={callBackCreateSuccess}> 
+    <CrudCreate
+      api={api}
+      getData={getData}
+      routeLink={routeLink}
+      callBackCreateSuccess={callBackCreateSuccess}
+    >
       <Form>
-        <Form.Group className="mb-3" controlId="functionality.nameId">
-          <Form.Label size="sm">Name</Form.Label>
-          <Form.Control
-            size="sm"
-            type="text"
-            placeholder="Enter name"
-            onChange={(e) => setName(e.target.value)}
-          />
-        </Form.Group>
-        <Form.Group className="mb-3" controlId="functionality.descriptionId">
-          <Form.Label size="sm">Description</Form.Label>
-          <Form.Control
-            size="sm"
-            type="text"
-            placeholder="Enter description"
-            onChange={(e) => setDescription(e.target.value)}
-          />
-        </Form.Group>
+        <FormImputText
+          label="Name"
+          placeholder="Enter with the name"
+          attributeName="name"
+          setObjectAttributes={setCreateObject}
+          objectAttributes={createObject}
+        ></FormImputText>
+
+        <FormImputText
+          label="Name"
+          placeholder="Enter with the description"
+          attributeName="description"
+          setObjectAttributes={setCreateObject}
+          objectAttributes={createObject}
+        ></FormImputText>
       </Form>
     </CrudCreate>
   );
