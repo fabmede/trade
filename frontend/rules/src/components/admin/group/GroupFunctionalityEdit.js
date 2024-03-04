@@ -5,6 +5,7 @@ import Table from "../../commons/Table";
 import { Button, ButtonGroup, Form, Modal } from "react-bootstrap";
 import { BsFillPlusSquareFill } from "react-icons/bs";
 import AxiosHttp from "../../../commons/utils/AxiosHttpInterceptor";
+import FormImputSelect from "../../commons/FormImputSelect";
 
 function GroupFunctionalityEdit(props) {
   const routeLink = "/admin/group/search";
@@ -16,13 +17,12 @@ function GroupFunctionalityEdit(props) {
   const [tradeFunctionalitiesRoles, setTradeFunctionalitiesRoles] = useState();
   const [tradeFunctionalities, setTradeFunctionalities] = useState();
   const [tradeRoles, setTradeRoles] = useState([]);
-  const [functionalitySelected, setFunctionalitySelected] = useState();
-  const [roleSelected, setRoleSelected] = useState();
   const [showSaveConfirm, setShowSaveConfirm] = useState(false);
 
   const handleSaveClose = () => setShowSaveConfirm(false);
   const handleSaveShow = () => setShowSaveConfirm(true);
   const axiosHttp = AxiosHttp();
+  const [editObject, setEditObject] = useState({});
 
   useEffect(() => {
     loadTradeGroupTradeRolesFunctionaliesRoles();
@@ -79,10 +79,10 @@ function GroupFunctionalityEdit(props) {
         id: currentTradeGroup.id,
       },
       tradeFunctionalityDto: {
-        id: functionalitySelected.id,
+        id: editObject.functionality.id,
       },
       tradeRoleDto: {
-        id: roleSelected.id,
+        id: editObject.role.id,
       },
     };
 
@@ -114,14 +114,14 @@ function GroupFunctionalityEdit(props) {
       .then((res) => {
         const deleteByIds = (tradeFunctionalityDtoId, tradeRoleDtoId) => {
           setTradeFunctionalitiesRoles((oldValues) => {
-            return oldValues.filter(
-              (element) =>
-              {
-                let elementId = element.tradeFunctionalityDto.id + "_" + element.tradeRoleDto.id; 
-                let parameterId = tradeFunctionalityDtoId + "_" + tradeRoleDtoId; 
-                return parameterId !== elementId;
-              }
-            );
+            return oldValues.filter((element) => {
+              let elementId =
+                element.tradeFunctionalityDto.id +
+                "_" +
+                element.tradeRoleDto.id;
+              let parameterId = tradeFunctionalityDtoId + "_" + tradeRoleDtoId;
+              return parameterId !== elementId;
+            });
           });
         };
 
@@ -169,55 +169,26 @@ function GroupFunctionalityEdit(props) {
             onClickSave={onClickSaveTradeFunctionalitiesRoles}
           >
             <Form>
-              <Form.Group className="mb-3" controlId="tradeGroup.nameId">
-                <Form.Label size="sm">Functionality</Form.Label>
-                <Form.Select
-                  aria-label="Functionality"
-                  size="sm"
-                  onChange={(e) => {
-                    const c = tradeFunctionalities?.find(
-                      (x) => String(x.id) === String(e.target.value)
-                    );
-                    setFunctionalitySelected(c);
-                  }}
-                >
-                  <option>Select one Functionality</option>
-                  {tradeFunctionalities
-                    ? tradeFunctionalities.map((functionality, index) => (
-                        <option
-                          reavalue={functionality.id}
-                          key={index}
-                          value={functionality.id}
-                        >
-                          {functionality.description}
-                        </option>
-                      ))
-                    : null}
-                </Form.Select>
-              </Form.Group>
+              <FormImputSelect
+                label="Functionality"
+                attributeName="functionality"
+                setObjectAttributes={setEditObject}
+                objectAttributes={editObject}
+                objectList={tradeFunctionalities}
+                objectListValue="id"
+                objectListShow="description"
+              ></FormImputSelect>
 
-              <Form.Group className="mb-3" controlId="tradeGroup.nameId">
-                <Form.Label size="sm">Role</Form.Label>
-                <Form.Select
-                  aria-label="Role"
-                  size="sm"
-                  onChange={(e) => {
-                    const c = tradeRoles?.find(
-                      (x) => String(x.id) === String(e.target.value)
-                    );
-                    setRoleSelected(c);
-                  }}
-                >
-                  <option>Select one Role</option>
-                  {tradeRoles
-                    ? tradeRoles.map((role, index) => (
-                        <option reavalue={role.id} key={index} value={role.id}>
-                          {role.description}
-                        </option>
-                      ))
-                    : null}
-                </Form.Select>
-              </Form.Group>
+              <FormImputSelect
+                label="Role"
+                attributeName="role"
+                setObjectAttributes={setEditObject}
+                objectAttributes={editObject}
+                objectList={tradeRoles}
+                objectListValue="id"
+                objectListShow="description"
+              ></FormImputSelect>
+
             </Form>
           </CrudEdit>
         </Modal.Body>
