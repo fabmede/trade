@@ -4,6 +4,7 @@ import { useLocation } from "react-router-dom";
 import CrudDetail from "../../commons/crud/CrudDetail";
 import FormImputText from "../../commons/FormImputText";
 import { Tab, Tabs } from "react-bootstrap";
+import UserFunctionalityDetail from "./UserFunctionalityDetail";
 
 function UserDetail() {
   const routeLink = "/admin/user/search";
@@ -42,7 +43,7 @@ function UserDetail() {
           Role Group
         </Tab>
         <Tab eventKey="roleFunctionality" title="Functionality / Role">
-          Functionality Group
+        <UserFunctionalityDetail tradeUser={location.state.tradeUser}></UserFunctionalityDetail>
         </Tab>
       </Tabs>
     </>
