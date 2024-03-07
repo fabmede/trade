@@ -40,7 +40,7 @@ function AppNavbar(props) {
   return (
     <Router>
       <div>
-        <Navbar bg="dark" expand="lg" variant={"dark"} style={{fontSize : fontNavBar}} fixed="top">
+        <Navbar bg="dark" expand="lg" variant={"dark"} style={{fontSize : fontNavBar}} fixed="top"  >
           <Container>
             <Navbar.Brand href="/">
               <img src={logo} alt='AML' width="30" height="30" className="d-inline-block align-top" />

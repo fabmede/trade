@@ -6,13 +6,19 @@ function AppContainer(props) {
     <div
       style={{
         textAlign: "left",
-        marginLeft: "10%",
-        marginRight: "10%",
-        marginTop: "4%",
+        marginLeft: "17%",
+        marginRight: "17%",
+        marginTop: "55px",
+        backgroundColor: "white"
       }}
     >
       <Container fluid="sm">
         <ContainerProvider>
+        <Row>
+              <Col>
+                <hr></hr>
+              </Col>
+            </Row>
             <Row>
               <Col>
                 <h1 style={{fontSize: '20px'}}>{props.title} - <i>{props.subtitle}</i></h1>

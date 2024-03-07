@@ -72,7 +72,6 @@ export const ContainerProvider = ({ children }) => {
           textAlign: "center",
           marginLeft: "0%",
           marginRight: "0%",
-          marginTop: "2%",
         }}
         hidden={hidden}
       >

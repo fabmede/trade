@@ -4,11 +4,15 @@ import "./index.css";
 import App from "./App";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { AppProvider } from "./commons/utils/AppContext";
+import loginBackgroundImg from "./img/login_background.png";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
-  <div>
+  <div style={{
+    height: "9050vh",
+    backgroundImage: `url(${loginBackgroundImg})`,
+  }}>
     <GoogleOAuthProvider clientId="925845673666-53lju5olbklsnf4bqbkfsdkj1fu350ta.apps.googleusercontent.com">
       <React.StrictMode>
         <AppProvider>

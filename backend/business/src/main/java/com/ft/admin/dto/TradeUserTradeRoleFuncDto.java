@@ -1,39 +1,55 @@
 package com.ft.admin.dto;
 
+import com.ft.admin.entity.TradeUserTradeRoleFunc;
 
 public class TradeUserTradeRoleFuncDto {
 
-    private String userEmail;
-    private Integer tradeRoleId;
-    private Integer tradeFunctionalityId;
+    private TradeUserDto tradeUserDto;
+    private TradeRoleDto tradeRoleDto;
+    private TradeFunctionalityDto tradeFunctionalityDto;
 
-    public String getUserEmail() {
-        return userEmail;
+    public TradeUserDto getTradeUserDto() {
+        return tradeUserDto;
     }
 
-    public void setUserEmail(String userEmail) {
-        this.userEmail = userEmail;
+    public void setTradeUserDto(TradeUserDto tradeUserDto) {
+        this.tradeUserDto = tradeUserDto;
     }
 
-    public Integer getTradeRoleId() {
-        return tradeRoleId;
+    public TradeRoleDto getTradeRoleDto() {
+        return tradeRoleDto;
     }
 
-    public void setTradeRoleId(Integer tradeRoleId) {
-        this.tradeRoleId = tradeRoleId;
+    public void setTradeRoleDto(TradeRoleDto tradeRoleDto) {
+        this.tradeRoleDto = tradeRoleDto;
     }
 
-    public Integer getTradeFunctionalityId() {
-        return tradeFunctionalityId;
+    public TradeFunctionalityDto getTradeFunctionalityDto() {
+        return tradeFunctionalityDto;
     }
 
-    public void setTradeFunctionalityId(Integer tradeFunctionalityId) {
-        this.tradeFunctionalityId = tradeFunctionalityId;
+    public void setTradeFunctionalityId(TradeFunctionalityDto tradeFunctionalityDto) {
+        this.tradeFunctionalityDto = tradeFunctionalityDto;
     }
 
-    public TradeUserTradeRoleFuncDto(String userEmail, Integer tradeRoleId, Integer tradeFunctionalityId) {
-        this.userEmail = userEmail;
-        this.tradeRoleId = tradeRoleId;
-        this.tradeFunctionalityId = tradeFunctionalityId;
+    public TradeUserTradeRoleFuncDto(TradeUserDto tradeUserDto, TradeRoleDto tradeRoleDto,
+            TradeFunctionalityDto tradeFunctionalityDto) {
+        this.tradeUserDto = tradeUserDto;
+        this.tradeRoleDto = tradeRoleDto;
+        this.tradeFunctionalityDto = tradeFunctionalityDto;
+    }
+
+    public static TradeUserTradeRoleFuncDto toDto(TradeUserTradeRoleFunc tradeUserTradeRoleFunc) {
+
+        return new TradeUserTradeRoleFuncDto(
+                new TradeUserDto(tradeUserTradeRoleFunc.getId().getTradeUser().getEmail(),
+                        tradeUserTradeRoleFunc.getId().getTradeUser().getEmail()),
+                new TradeRoleDto(tradeUserTradeRoleFunc.getId().getTradeRole().getId(),
+                        tradeUserTradeRoleFunc.getId().getTradeRole().getDescription(),
+                        tradeUserTradeRoleFunc.getId().getTradeRole().getName()),
+                new TradeFunctionalityDto(tradeUserTradeRoleFunc.getId().getTradeFunctionality().getId(),
+                        tradeUserTradeRoleFunc.getId().getTradeFunctionality().getDescription(),
+                        tradeUserTradeRoleFunc.getId().getTradeFunctionality().getName()));
+
     }
 }

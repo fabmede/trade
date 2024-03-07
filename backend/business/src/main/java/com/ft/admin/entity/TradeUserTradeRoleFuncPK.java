@@ -12,57 +12,81 @@ public class TradeUserTradeRoleFuncPK implements Serializable {
 	//default serial version id, required for serializable classes.
 	private static final long serialVersionUID = 1L;
 
-	@Column(name="user_email")
-	private String userEmail;
+	@ManyToOne
+	@JoinColumn(name="user_email")
+	private TradeUser tradeUser;
 
-	@Column(name="trade_role_id")
-	private Integer tradeRoleId;
+	@ManyToOne
+	@JoinColumn(name="trade_functionality_id")
+	private TradeFunctionality tradeFunctionality;
 
-	@Column(name="trade_functionality_id")
-	private Integer tradeFunctionalityId;
+	@ManyToOne
+	@JoinColumn(name="trade_role_id")
+	private TradeRole tradeRole;
 
 	public TradeUserTradeRoleFuncPK() {
 	}
-	public String getUserEmail() {
-		return this.userEmail;
-	}
-	public void setUserEmail(String userEmail) {
-		this.userEmail = userEmail;
-	}
-	public Integer getTradeRoleId() {
-		return this.tradeRoleId;
-	}
-	public void setTradeRoleId(Integer tradeRoleId) {
-		this.tradeRoleId = tradeRoleId;
-	}
-	public Integer getTradeFunctionalityId() {
-		return this.tradeFunctionalityId;
-	}
-	public void setTradeFunctionalityId(Integer tradeFunctionalityId) {
-		this.tradeFunctionalityId = tradeFunctionalityId;
+
+	public TradeUser getTradeUser() {
+		return tradeUser;
 	}
 
-	public boolean equals(Object other) {
-		if (this == other) {
-			return true;
-		}
-		if (!(other instanceof TradeUserTradeRoleFuncPK)) {
-			return false;
-		}
-		TradeUserTradeRoleFuncPK castOther = (TradeUserTradeRoleFuncPK)other;
-		return 
-			this.userEmail.equals(castOther.userEmail)
-			&& this.tradeRoleId.equals(castOther.tradeRoleId)
-			&& this.tradeFunctionalityId.equals(castOther.tradeFunctionalityId);
+	public void setTradeUser(TradeUser tradeUser) {
+		this.tradeUser = tradeUser;
 	}
 
+	public TradeFunctionality getTradeFunctionality() {
+		return tradeFunctionality;
+	}
+
+	public void setTradeFunctionality(TradeFunctionality tradeFunctionality) {
+		this.tradeFunctionality = tradeFunctionality;
+	}
+
+	public TradeRole getTradeRole() {
+		return tradeRole;
+	}
+
+	public void setTradeRole(TradeRole tradeRole) {
+		this.tradeRole = tradeRole;
+	}
+
+	@Override
 	public int hashCode() {
 		final int prime = 31;
-		int hash = 17;
-		hash = hash * prime + this.userEmail.hashCode();
-		hash = hash * prime + this.tradeRoleId.hashCode();
-		hash = hash * prime + this.tradeFunctionalityId.hashCode();
-		
-		return hash;
+		int result = 1;
+		result = prime * result + ((tradeUser == null) ? 0 : tradeUser.hashCode());
+		result = prime * result + ((tradeFunctionality == null) ? 0 : tradeFunctionality.hashCode());
+		result = prime * result + ((tradeRole == null) ? 0 : tradeRole.hashCode());
+		return result;
 	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		TradeUserTradeRoleFuncPK other = (TradeUserTradeRoleFuncPK) obj;
+		if (tradeUser == null) {
+			if (other.tradeUser != null)
+				return false;
+		} else if (!tradeUser.equals(other.tradeUser))
+			return false;
+		if (tradeFunctionality == null) {
+			if (other.tradeFunctionality != null)
+				return false;
+		} else if (!tradeFunctionality.equals(other.tradeFunctionality))
+			return false;
+		if (tradeRole == null) {
+			if (other.tradeRole != null)
+				return false;
+		} else if (!tradeRole.equals(other.tradeRole))
+			return false;
+		return true;
+	}
+
+	
 }

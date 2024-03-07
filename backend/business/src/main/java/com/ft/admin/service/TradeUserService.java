@@ -1,6 +1,6 @@
 package com.ft.admin.service;
 
-import com.ft.admin.dto.TradeGroupDto;
+import com.ft.admin.dto.TradeGroupTradeRoleFuncDto;
 import com.ft.admin.dto.TradeUserDto;
 import com.ft.admin.dto.TradeUserTradeGroupDto;
 import com.ft.admin.dto.TradeUserTradeRoleFuncDto;
@@ -30,24 +30,27 @@ public class TradeUserService {
 
     public List<TradeUserDto> findAll() {
         List<TradeUser> listTradeUser = this.tradeUserRepository.findAll();
-        List<TradeUserDto> listTradeUserDto = listTradeUser.stream().map( el-> new TradeUserDto(el.getEmail(),el.getName())).collect(Collectors.toList());
+        List<TradeUserDto> listTradeUserDto = listTradeUser.stream()
+                .map(el -> new TradeUserDto(el.getEmail(), el.getName())).collect(Collectors.toList());
         return listTradeUserDto;
     }
 
-    public List<TradeUserTradeRoleFuncDto> findTradeUserTradeRoleFuncsByUserEmail(String email) {
-        List<TradeUserTradeRoleFunc>  tradeUserTradeRoleFunc = this.tradeUserTradeRoleFuncsRepository.findByUserEmail(email);
-        List<TradeUserTradeRoleFuncDto>  tradeUserTradeRoleFuncDtos = tradeUserTradeRoleFunc.stream().map( el -> new TradeUserTradeRoleFuncDto(el.getId().getUserEmail(),el.getId().getTradeRoleId(), el.getId().getTradeFunctionalityId())).collect(Collectors.toList());
-        return tradeUserTradeRoleFuncDtos;
+    public List<TradeUserTradeRoleFunc> findTradeUserTradeRoleFuncsByUserEmail(String email) {
+        List<TradeUserTradeRoleFunc> tradeUserTradeRoleFunc = this.tradeUserTradeRoleFuncsRepository
+                .findByUserEmail(email);
+        return tradeUserTradeRoleFunc;
     }
 
-    public List<TradeUserTradeGroupDto> findTradeUserTradeGroupByEmail(String email){
-        List<TradeUserTradeGroup>  tradeUserTradeGroups = this.tradeUserTradeGroupRepository.findByUserEmail(email);
-        List<TradeUserTradeGroupDto>  tradeUserTradeGroupsDto = tradeUserTradeGroups.stream().map( el -> new TradeUserTradeGroupDto(el.getId().getTradeGroupId(),el.getId().getUserEmail())).collect(Collectors.toList());
+    public List<TradeUserTradeGroupDto> findTradeUserTradeGroupByEmail(String email) {
+        List<TradeUserTradeGroup> tradeUserTradeGroups = this.tradeUserTradeGroupRepository.findByUserEmail(email);
+        List<TradeUserTradeGroupDto> tradeUserTradeGroupsDto = tradeUserTradeGroups.stream()
+                .map(el -> new TradeUserTradeGroupDto(el.getId().getTradeGroupId(), el.getId().getUserEmail()))
+                .collect(Collectors.toList());
         return tradeUserTradeGroupsDto;
     }
 
     @Transactional
-    public TradeUserDto saveTradeUser(TradeUserDto tradeUserDto){
+    public TradeUserDto saveTradeUser(TradeUserDto tradeUserDto) {
         TradeUser tradeUser = new TradeUser();
         tradeUser.setEmail(tradeUserDto.getEmail());
         tradeUser.setName(tradeUserDto.getName());
@@ -56,7 +59,7 @@ public class TradeUserService {
     }
 
     @Transactional
-    public TradeUserTradeGroupDto saveTradeUserTradeGroup(TradeUserTradeGroupDto tradeUserTradeGroupDto){
+    public TradeUserTradeGroupDto saveTradeUserTradeGroup(TradeUserTradeGroupDto tradeUserTradeGroupDto) {
         TradeUserTradeGroup tradeUserTradeGroup = new TradeUserTradeGroup();
         tradeUserTradeGroup.setId(new TradeUserTradeGroupPK());
         tradeUserTradeGroup.getId().setTradeGroupId(tradeUserTradeGroupDto.getTradeGroupId());
@@ -66,17 +69,55 @@ public class TradeUserService {
     }
 
     @Transactional
-    public TradeUserTradeRoleFuncDto saveTradeUserTradeRoleFuncs(TradeUserTradeRoleFuncDto tradeUserTradeGroupDto){
+    public TradeUserTradeRoleFunc createTradeUserTradeRoleFuncs(TradeUserTradeRoleFuncDto tradeUserTradeRoleFuncDto) {
+
+        TradeUserTradeRoleFuncPK tradeUserTradeRoleFuncPK = new TradeUserTradeRoleFuncPK();
+        tradeUserTradeRoleFuncPK.setTradeUser(new TradeUser());
+        tradeUserTradeRoleFuncPK.setTradeRole(new TradeRole());
+        tradeUserTradeRoleFuncPK.setTradeFunctionality(new TradeFunctionality());
+
+        tradeUserTradeRoleFuncPK
+                .getTradeFunctionality().setId(tradeUserTradeRoleFuncDto.getTradeFunctionalityDto().getId());
+        tradeUserTradeRoleFuncPK.getTradeUser().setEmail(tradeUserTradeRoleFuncDto.getTradeUserDto().getEmail());
+        tradeUserTradeRoleFuncPK.getTradeRole().setId(tradeUserTradeRoleFuncDto.getTradeRoleDto().getId());
+
         TradeUserTradeRoleFunc tradeUserTradeRoleFunc = new TradeUserTradeRoleFunc();
-        tradeUserTradeRoleFunc.setId(new TradeUserTradeRoleFuncPK());
-        tradeUserTradeRoleFunc.getId().setTradeRoleId(tradeUserTradeGroupDto.getTradeRoleId());
-        tradeUserTradeRoleFunc.getId().setUserEmail(tradeUserTradeGroupDto.getUserEmail());
-        tradeUserTradeRoleFunc.getId().setTradeFunctionalityId(tradeUserTradeGroupDto.getTradeFunctionalityId());
-        this.tradeUserTradeRoleFuncsRepository.save(tradeUserTradeRoleFunc);
-        return tradeUserTradeGroupDto;
+        tradeUserTradeRoleFunc.setId(tradeUserTradeRoleFuncPK);
+        TradeUserTradeRoleFunc tradeUserTradeRoleFuncSaved = this.tradeUserTradeRoleFuncsRepository
+                .saveAndFlush(tradeUserTradeRoleFunc);
+
+        tradeUserTradeRoleFuncSaved = this.findTradeUserTradeRoleFuncById(
+                tradeUserTradeRoleFuncDto.getTradeUserDto().getEmail(),
+                tradeUserTradeRoleFuncDto.getTradeFunctionalityDto().getId(),
+                tradeUserTradeRoleFuncDto.getTradeRoleDto().getId());
+
+        return tradeUserTradeRoleFuncSaved;
+
     }
 
-     @Transactional
+    @Transactional
+    public void deleteTradeUserTradeRoleFuncs(TradeUserTradeRoleFuncDto tradeUserTradeRoleFuncDto) {
+
+        TradeUserTradeRoleFuncPK tradeUserTradeRoleFuncPK = new TradeUserTradeRoleFuncPK();
+        tradeUserTradeRoleFuncPK.setTradeUser(new TradeUser());
+        tradeUserTradeRoleFuncPK.setTradeRole(new TradeRole());
+        tradeUserTradeRoleFuncPK.setTradeFunctionality(new TradeFunctionality());
+
+        tradeUserTradeRoleFuncPK
+                .getTradeFunctionality().setId(tradeUserTradeRoleFuncDto.getTradeFunctionalityDto().getId());
+        tradeUserTradeRoleFuncPK.getTradeUser().setEmail(tradeUserTradeRoleFuncDto.getTradeUserDto().getEmail());
+        tradeUserTradeRoleFuncPK.getTradeRole().setId(tradeUserTradeRoleFuncDto.getTradeRoleDto().getId());
+
+        TradeUserTradeRoleFunc tradeUserTradeRoleFuncToRemove = this.findTradeUserTradeRoleFuncById(
+                tradeUserTradeRoleFuncDto.getTradeUserDto().getEmail(),
+                tradeUserTradeRoleFuncDto.getTradeFunctionalityDto().getId(),
+                tradeUserTradeRoleFuncDto.getTradeRoleDto().getId());
+
+        tradeUserTradeRoleFuncsRepository.delete(tradeUserTradeRoleFuncToRemove);
+        tradeUserTradeRoleFuncsRepository.flush();
+    }
+
+    @Transactional
     public TradeUserDto updateTradeUser(TradeUserDto tradeUserDto) {
         Optional<TradeUser> oTradeUser = this.tradeUserRepository.findById(tradeUserDto.getEmail());
 
@@ -91,7 +132,7 @@ public class TradeUserService {
     }
 
     @Transactional
-    public void deleteTradeUser(String email){
+    public void deleteTradeUser(String email) {
         Optional<TradeUser> oTradeUser = this.tradeUserRepository.findById(email);
 
         if (!oTradeUser.isPresent()) {
@@ -100,5 +141,15 @@ public class TradeUserService {
 
         TradeUser tradeUser = oTradeUser.get();
         this.tradeUserRepository.delete(tradeUser);
-    }  
+    }
+
+    public TradeUserTradeRoleFunc findTradeUserTradeRoleFuncById(String email,
+            Integer tradeFunctionalityId,
+            Integer tradeRoleId) {
+        tradeUserTradeRoleFuncsRepository.clear();
+        TradeUserTradeRoleFunc tradeUserTradeRoleFunc = this.tradeUserTradeRoleFuncsRepository
+                .findById_TradeUser_EmailAndId_TradeFunctionality_IdAndId_TradeRole_Id(email, tradeFunctionalityId,
+                        tradeRoleId);
+        return tradeUserTradeRoleFunc;
+    }
 }
