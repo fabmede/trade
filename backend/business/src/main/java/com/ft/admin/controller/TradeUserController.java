@@ -1,9 +1,9 @@
 package com.ft.admin.controller;
 
-import com.ft.admin.dto.TradeGroupTradeRoleFuncDto;
 import com.ft.admin.dto.TradeUserDto;
 import com.ft.admin.dto.TradeUserTradeGroupDto;
 import com.ft.admin.dto.TradeUserTradeRoleFuncDto;
+import com.ft.admin.entity.TradeUserTradeGroup;
 import com.ft.admin.entity.TradeUserTradeRoleFunc;
 import com.ft.admin.service.TradeUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,16 +25,21 @@ public class TradeUserController {
         return ResponseEntity.ok(this.tradeUserService.saveTradeUser(tradeUserDto));
     }
 
+    @RequestMapping("/")
+    public ResponseEntity<List<TradeUserDto>> getTradeUsers() {
+        return ResponseEntity.ok(this.tradeUserService.findAll());
+    }
+
     @PutMapping("/{email}")
     public ResponseEntity<TradeUserDto> update(@RequestBody TradeUserDto tradeUserDto, @PathVariable String email) {
         tradeUserDto.setEmail(email);
         return ResponseEntity.ok(this.tradeUserService.updateTradeUser(tradeUserDto));
     }
 
-    @PutMapping("/{email}/tradeUserTradeGroups")
-    public ResponseEntity<TradeUserTradeGroupDto> saveTradeUserTradeGroup(
-            @RequestBody TradeUserTradeGroupDto tradeUserTradeGroupDto) {
-        return ResponseEntity.ok(this.tradeUserService.saveTradeUserTradeGroup(tradeUserTradeGroupDto));
+    @DeleteMapping("/{email}")
+    public ResponseEntity<String> delete(@PathVariable String email) {
+        this.tradeUserService.deleteTradeUser(email);
+        return ResponseEntity.ok().body(null);
     }
 
     @PutMapping("/{email}/tradeUserTradeRoleFuncs")
@@ -47,10 +52,6 @@ public class TradeUserController {
         return ResponseEntity.ok(TradeUserTradeRoleFuncDto.toDto(tradeUserTradeRoleFunc));
     }
 
-    @RequestMapping("/")
-    public ResponseEntity<List<TradeUserDto>> getTradeUsers() {
-        return ResponseEntity.ok(this.tradeUserService.findAll());
-    }
 
     @RequestMapping("/{email}/tradeUserTradeRoleFuncs")
     public ResponseEntity<List<TradeUserTradeRoleFuncDto>> getTradeUserTradeRoleFuncs(@PathVariable String email) {
@@ -77,9 +78,24 @@ public class TradeUserController {
         return ResponseEntity.ok(this.tradeUserService.findTradeUserTradeGroupByEmail(email));
     }
 
-    @DeleteMapping("/{email}")
-    public ResponseEntity<String> delete(@PathVariable String email) {
-        this.tradeUserService.deleteTradeUser(email);
-        return ResponseEntity.ok().body(null);
+    @PutMapping("/{email}/tradeUserTradeGroups")
+    public ResponseEntity<TradeUserTradeGroupDto> saveTradeUserTradeGroup(
+            @PathVariable String email,
+            @RequestBody TradeUserTradeGroupDto tradeUserTradeGroupDto) {
+
+        tradeUserTradeGroupDto.getTradeUserDto().setEmail(email);
+        TradeUserTradeGroup tradeUserTradeGroup = this.tradeUserService.saveTradeUserTradeGroup(tradeUserTradeGroupDto);
+
+        return ResponseEntity.ok(TradeUserTradeGroupDto.toDto(tradeUserTradeGroup));
     }
+
+    @DeleteMapping("/{email}/tradeUserTradeGroups")
+    public ResponseEntity<Void> deleteTradeUserTradeGroups(@PathVariable String email,
+    @RequestBody TradeUserTradeGroupDto tradeUserTradeGroupDto) {
+
+        tradeUserTradeGroupDto.getTradeUserDto().setEmail(email);
+        this.tradeUserService.deleteTradeUserGroup(tradeUserTradeGroupDto);
+        return ResponseEntity.ok().body(null);
+    }   
+
 }

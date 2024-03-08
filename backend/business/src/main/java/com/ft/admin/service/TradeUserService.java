@@ -1,6 +1,5 @@
 package com.ft.admin.service;
 
-import com.ft.admin.dto.TradeGroupTradeRoleFuncDto;
 import com.ft.admin.dto.TradeUserDto;
 import com.ft.admin.dto.TradeUserTradeGroupDto;
 import com.ft.admin.dto.TradeUserTradeRoleFuncDto;
@@ -44,7 +43,7 @@ public class TradeUserService {
     public List<TradeUserTradeGroupDto> findTradeUserTradeGroupByEmail(String email) {
         List<TradeUserTradeGroup> tradeUserTradeGroups = this.tradeUserTradeGroupRepository.findByUserEmail(email);
         List<TradeUserTradeGroupDto> tradeUserTradeGroupsDto = tradeUserTradeGroups.stream()
-                .map(el -> new TradeUserTradeGroupDto(el.getId().getTradeGroupId(), el.getId().getUserEmail()))
+                .map(el -> TradeUserTradeGroupDto.toDto(el))
                 .collect(Collectors.toList());
         return tradeUserTradeGroupsDto;
     }
@@ -59,13 +58,28 @@ public class TradeUserService {
     }
 
     @Transactional
-    public TradeUserTradeGroupDto saveTradeUserTradeGroup(TradeUserTradeGroupDto tradeUserTradeGroupDto) {
+    public TradeUserTradeGroup saveTradeUserTradeGroup(TradeUserTradeGroupDto tradeUserTradeGroupDto) {
         TradeUserTradeGroup tradeUserTradeGroup = new TradeUserTradeGroup();
-        tradeUserTradeGroup.setId(new TradeUserTradeGroupPK());
-        tradeUserTradeGroup.getId().setTradeGroupId(tradeUserTradeGroupDto.getTradeGroupId());
-        tradeUserTradeGroup.getId().setUserEmail(tradeUserTradeGroupDto.getUserEmail());
-        this.tradeUserTradeGroupRepository.save(tradeUserTradeGroup);
-        return tradeUserTradeGroupDto;
+        TradeUserTradeGroupPK tradeUserTradeGroupPK = new TradeUserTradeGroupPK();
+        tradeUserTradeGroupPK.setTradeGroup(new TradeGroup());
+        tradeUserTradeGroupPK.setTradeUser(new TradeUser());
+
+        tradeUserTradeGroupPK.getTradeGroup().setId(tradeUserTradeGroupDto.getTradeGroupDto().getId());
+        tradeUserTradeGroupPK.getTradeGroup()
+                .setDescription(tradeUserTradeGroupDto.getTradeGroupDto().getDescription());
+        tradeUserTradeGroupPK.getTradeGroup().setName(tradeUserTradeGroupDto.getTradeGroupDto().getName());
+
+        tradeUserTradeGroupPK.getTradeUser().setEmail(tradeUserTradeGroupDto.getTradeUserDto().getEmail());
+        tradeUserTradeGroupPK.getTradeUser().setName(tradeUserTradeGroupDto.getTradeUserDto().getName());
+
+        tradeUserTradeGroup.setId(tradeUserTradeGroupPK);
+
+        TradeUserTradeGroup tradeUserTradeGroupSaved = this.tradeUserTradeGroupRepository
+                .saveAndFlush(tradeUserTradeGroup);
+
+        tradeUserTradeGroupSaved = this.findTradeUserGroupById(tradeUserTradeGroupDto.getTradeUserDto().getEmail(),
+                tradeUserTradeGroupDto.getTradeGroupDto().getId());
+        return tradeUserTradeGroupSaved;
     }
 
     @Transactional
@@ -152,4 +166,23 @@ public class TradeUserService {
                         tradeRoleId);
         return tradeUserTradeRoleFunc;
     }
+
+    public TradeUserTradeGroup findTradeUserGroupById(String email, Integer tradeGroupId) {
+        tradeUserTradeGroupRepository.clear();
+        TradeUserTradeGroup tradeUserTradeGroup = this.tradeUserTradeGroupRepository
+                .findById_TradeUser_EmailAndId_tradeGroup_Id(email, tradeGroupId);
+        return tradeUserTradeGroup;
+    }
+
+    @Transactional
+    public void deleteTradeUserGroup(TradeUserTradeGroupDto tradeUserTradeGroupDto) {
+
+        TradeUserTradeGroup tradeUserTradeGroupDelete = this.findTradeUserGroupById(
+                tradeUserTradeGroupDto.getTradeUserDto().getEmail(),
+                tradeUserTradeGroupDto.getTradeGroupDto().getId());
+
+        tradeUserTradeGroupRepository.delete(tradeUserTradeGroupDelete);
+        tradeUserTradeGroupRepository.flush();
+    }
+
 }

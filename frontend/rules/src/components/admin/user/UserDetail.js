@@ -5,6 +5,7 @@ import CrudDetail from "../../commons/crud/CrudDetail";
 import FormImputText from "../../commons/FormImputText";
 import { Tab, Tabs } from "react-bootstrap";
 import UserFunctionalityDetail from "./UserFunctionalityDetail";
+import UserGroupDetail from "./UserGroupDetail";
 
 function UserDetail() {
   const routeLink = "/admin/user/search";
@@ -40,7 +41,7 @@ function UserDetail() {
           </CrudDetail>
         </Tab>
         <Tab eventKey="roleGroup" title="Group / Role">
-          Role Group
+          <UserGroupDetail tradeUser={location.state.tradeUser}></UserGroupDetail>
         </Tab>
         <Tab eventKey="roleFunctionality" title="Functionality / Role">
         <UserFunctionalityDetail tradeUser={location.state.tradeUser}></UserFunctionalityDetail>

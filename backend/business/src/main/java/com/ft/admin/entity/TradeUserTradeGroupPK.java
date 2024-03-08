@@ -12,46 +12,64 @@ public class TradeUserTradeGroupPK implements Serializable {
 	//default serial version id, required for serializable classes.
 	private static final long serialVersionUID = 1L;
 
-	@Column(name="trade_group_id")
-	private Integer tradeGroupId;
+	@ManyToOne
+	@JoinColumn(name="trade_group_id")
+	private TradeGroup tradeGroup;
 
-	@Column(name="user_email")
-	private String userEmail;
+	@ManyToOne
+	@JoinColumn(name="user_email")
+	private TradeUser tradeUser;
 
 	public TradeUserTradeGroupPK() {
 	}
-	public Integer getTradeGroupId() {
-		return this.tradeGroupId;
-	}
-	public void setTradeGroupId(Integer tradeGroupId) {
-		this.tradeGroupId = tradeGroupId;
-	}
-	public String getUserEmail() {
-		return this.userEmail;
-	}
-	public void setUserEmail(String userEmail) {
-		this.userEmail = userEmail;
+
+	public TradeGroup getTradeGroup() {
+		return tradeGroup;
 	}
 
-	public boolean equals(Object other) {
-		if (this == other) {
-			return true;
-		}
-		if (!(other instanceof TradeUserTradeGroupPK)) {
-			return false;
-		}
-		TradeUserTradeGroupPK castOther = (TradeUserTradeGroupPK)other;
-		return 
-			this.tradeGroupId.equals(castOther.tradeGroupId)
-			&& this.userEmail.equals(castOther.userEmail);
+	public void setTradeGroup(TradeGroup tradeGroup) {
+		this.tradeGroup = tradeGroup;
 	}
 
+	public TradeUser getTradeUser() {
+		return tradeUser;
+	}
+
+	public void setTradeUser(TradeUser tradeUser) {
+		this.tradeUser = tradeUser;
+	}
+
+	@Override
 	public int hashCode() {
 		final int prime = 31;
-		int hash = 17;
-		hash = hash * prime + this.tradeGroupId.hashCode();
-		hash = hash * prime + this.userEmail.hashCode();
-		
-		return hash;
+		int result = 1;
+		result = prime * result + ((tradeGroup == null) ? 0 : tradeGroup.hashCode());
+		result = prime * result + ((tradeUser == null) ? 0 : tradeUser.hashCode());
+		return result;
 	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		TradeUserTradeGroupPK other = (TradeUserTradeGroupPK) obj;
+		if (tradeGroup == null) {
+			if (other.tradeGroup != null)
+				return false;
+		} else if (!tradeGroup.equals(other.tradeGroup))
+			return false;
+		if (tradeUser == null) {
+			if (other.tradeUser != null)
+				return false;
+		} else if (!tradeUser.equals(other.tradeUser))
+			return false;
+		return true;
+	}
+	
+
+	
 }

@@ -120,7 +120,7 @@ function UserFunctionalityEdit(props) {
 
     axiosHttp
       .put(
-        tradeUserApi + currentTradeUser.id + "/tradeUserTradeRoleFuncs",
+        tradeUserApi + currentTradeUser.email + "/tradeUserTradeRoleFuncs",
         tradeUserTradeRoleFuncDto
       )
       .then((res) => {
@@ -141,7 +141,6 @@ function UserFunctionalityEdit(props) {
   ];
   
   return (
-    <>
     <>
       <Table
         data={tradeUserFunctionalitiesRoles ? tradeUserFunctionalitiesRoles : []}
@@ -197,7 +196,7 @@ function UserFunctionalityEdit(props) {
         </Modal.Body>
         <Modal.Footer></Modal.Footer>
       </Modal>
-    </>    </>
+    </>    
   );
 }
 
