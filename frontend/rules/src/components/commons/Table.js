@@ -54,6 +54,7 @@ function Table(props) {
                   <ButtonTableDelete
                     onClick={props.callBackOnClickRemoveButton}
                     onClickParam={data}
+                    onClickRow={index_row}
                     hidden={props.hideCrudTableButonDelete}
                   ></ButtonTableDelete>
                 </ButtonGroup>

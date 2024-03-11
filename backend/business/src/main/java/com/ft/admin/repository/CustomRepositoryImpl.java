@@ -12,7 +12,7 @@ public class CustomRepositoryImpl<T, ID extends Serializable> extends SimpleJpaR
 
     private final EntityManager entityManager;
 
-    public CustomRepositoryImpl(JpaEntityInformation entityInformation, EntityManager entityManager) {
+    public CustomRepositoryImpl(JpaEntityInformation<T,ID> entityInformation, EntityManager entityManager) {
         super(entityInformation, entityManager);
         this.entityManager = entityManager;
     }

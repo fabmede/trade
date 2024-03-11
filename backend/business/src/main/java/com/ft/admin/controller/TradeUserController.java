@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -52,7 +53,6 @@ public class TradeUserController {
         return ResponseEntity.ok(TradeUserTradeRoleFuncDto.toDto(tradeUserTradeRoleFunc));
     }
 
-
     @RequestMapping("/{email}/tradeUserTradeRoleFuncs")
     public ResponseEntity<List<TradeUserTradeRoleFuncDto>> getTradeUserTradeRoleFuncs(@PathVariable String email) {
 
@@ -78,8 +78,9 @@ public class TradeUserController {
         return ResponseEntity.ok(this.tradeUserService.findTradeUserTradeGroupByEmail(email));
     }
 
+    /*
     @PutMapping("/{email}/tradeUserTradeGroups")
-    public ResponseEntity<TradeUserTradeGroupDto> saveTradeUserTradeGroup(
+    public ResponseEntity<TradeUserTradeGroupDto> createTradeUserTradeGroup(
             @PathVariable String email,
             @RequestBody TradeUserTradeGroupDto tradeUserTradeGroupDto) {
 
@@ -87,15 +88,31 @@ public class TradeUserController {
         TradeUserTradeGroup tradeUserTradeGroup = this.tradeUserService.saveTradeUserTradeGroup(tradeUserTradeGroupDto);
 
         return ResponseEntity.ok(TradeUserTradeGroupDto.toDto(tradeUserTradeGroup));
+    } */
+
+    @PutMapping("/{email}/tradeUserTradeGroups")
+    public ResponseEntity<List<TradeUserTradeGroupDto>> createTradeUserTradeGroup(
+            @PathVariable String email,
+            @RequestBody List<TradeUserTradeGroupDto> listTradeUserTradeGroupDto) {
+
+        List<TradeUserTradeGroupDto> listTradeUserTradeGroupDtoToReturn = new ArrayList<>();
+
+        listTradeUserTradeGroupDto.forEach(el -> {
+            el.getTradeUserDto().setEmail(email);
+            TradeUserTradeGroup tradeUserTradeGroup = this.tradeUserService.saveTradeUserTradeGroup(el);
+            listTradeUserTradeGroupDtoToReturn.add(TradeUserTradeGroupDto.toDto(tradeUserTradeGroup));
+        });
+
+        return ResponseEntity.ok(listTradeUserTradeGroupDtoToReturn);
     }
 
     @DeleteMapping("/{email}/tradeUserTradeGroups")
     public ResponseEntity<Void> deleteTradeUserTradeGroups(@PathVariable String email,
-    @RequestBody TradeUserTradeGroupDto tradeUserTradeGroupDto) {
+            @RequestBody TradeUserTradeGroupDto tradeUserTradeGroupDto) {
 
         tradeUserTradeGroupDto.getTradeUserDto().setEmail(email);
         this.tradeUserService.deleteTradeUserGroup(tradeUserTradeGroupDto);
         return ResponseEntity.ok().body(null);
-    }   
+    }
 
 }

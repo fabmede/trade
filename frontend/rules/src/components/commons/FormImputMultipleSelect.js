@@ -4,25 +4,23 @@ function FormImputMultipleSelect(props) {
 
   const setValue = (value) => {
 
-    const valueSelected = props.objectList?.find(
-      (x) => String(x[props.objectListValue]) === String(value.value)
-    );
-
-    props.objectAttributes[props.attributeName] = valueSelected; 
-    let newValue = props.objectAttributes;
-
-    console.log("ObjectAttributes", props.objectAttributes);
+    const valuesSelected = []
+    for (var i = 0, l = value.options.length; i < l; i++) {
+      if (value.options[i].selected) {
+        const valueSelected = props.objectList?.find(
+          (x) => String(x[props.objectListValue]) === String(value[i].value)
+        );
+    
+        valuesSelected.push(valueSelected);
+      }
+    }
+    props.objectAttributes[props.attributeName] = valuesSelected; 
 
     props.setObjectAttributes((oldValue) => ({
       ...oldValue,
-      ...newValue,
+      ...valuesSelected,
     }));
 
-    for (var i = 0, l = value.options.length; i < l; i++) {
-      if (value.options[i].selected) {
-        console.log('Value selected', value.options[i]);
-      }
-    }
 
   };
 

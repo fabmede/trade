@@ -29,6 +29,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
     @Autowired
     UserDetailsServiceImpl userDetailsServiceImpl;
 
+    @SuppressWarnings("rawtypes")
     @Override
     protected void doFilterInternal(HttpServletRequest req, HttpServletResponse res, FilterChain chain) throws ServletException, IOException {
 
@@ -54,6 +55,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
         return null;
     }
 
+    @SuppressWarnings("rawtypes")
     private ResponseEntity<Map>  getGoogleUserInfo(String acessToken){
         String googleUserInfoUrl = "https://www.googleapis.com/oauth2/v1/userinfo?access_token="+acessToken;
 

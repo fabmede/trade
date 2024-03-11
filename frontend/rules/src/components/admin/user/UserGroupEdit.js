@@ -6,9 +6,9 @@ import { Button, ButtonGroup, Form, Modal } from "react-bootstrap";
 import { BsFillPlusSquareFill } from "react-icons/bs";
 import AxiosHttp from "../../../commons/utils/AxiosHttpInterceptor";
 import FormImputMultipleSelect from "../../commons/FormImputMultipleSelect";
+import { element } from "prop-types";
 
 function UserGroupEdit(props) {
-
   const routeLink = "/admin/user/search";
   const tradeUserApi = "http://localhost:8090/tradeusers/";
   const tradeGroupApi = "http://localhost:8090/tradegroups/";
@@ -63,21 +63,13 @@ function UserGroupEdit(props) {
         { data: pCurrentTradeUser }
       )
       .then((res) => {
-        const deleteByIds = (tradeGroupDtoId) => {
-
-          console.log(tradeGroupDtoId);
-          setTradeUserGroups((oldValues) => {
-            return oldValues.filter((element) => {
-              let elementId = "_"+element.tradeGroupDto.id;
-              let parameterId = "_"+tradeGroupDtoId;
-              return parameterId !== elementId;
-            });
+        setTradeUserGroups((oldValues) => {
+          return oldValues.filter((element) => {
+            let elementId = "_" + element.tradeGroupDto.id;
+            let parameterId = "_" + pCurrentTradeUser.tradeGroupDto.id;
+            return parameterId !== elementId;
           });
-        };
-
-        deleteByIds(
-          pCurrentTradeUser.tradeGroupDto.id
-        );
+        });
       })
       .catch((err) => {
         console.error("Error delete", err);
@@ -88,24 +80,29 @@ function UserGroupEdit(props) {
   };
 
   const onClickSaveTradeUserGroup = () => {
+    console.log("editObject.group", editObject.group);
 
-    console.log('currentTradeUser',currentTradeUser);
-    var tradeUserTradeGroupDto = {
-      tradeUserDto: {
-        email: currentTradeUser.email,
-      },
-      tradeGroupDto: {
-        id: editObject.group.id,
-      }
-    };
+    let listTradeUserTradeGroupDto = [];
+    editObject.group.forEach((element) => {
+      listTradeUserTradeGroupDto.push({
+        tradeUserDto: {
+          email: currentTradeUser.email,
+        },
+        tradeGroupDto: {
+          id: element.id,
+        },
+      });
+    });
+
 
     axiosHttp
       .put(
         tradeUserApi + currentTradeUser.email + "/tradeUserTradeGroups",
-        tradeUserTradeGroupDto
+        listTradeUserTradeGroupDto
       )
       .then((res) => {
-        tradeUserGroups.push(res.data);
+
+        res.data.forEach(element => tradeUserGroups.push(element))
         setShowSaveConfirm(false);
       })
       .catch((err) => {
@@ -115,17 +112,13 @@ function UserGroupEdit(props) {
         console.log("Finally save");
       });
   };
-  const columns = [
-    { header: "Group", field: "tradeGroupDto.name" }
-  ];
 
+  const columns = [{ header: "Group", field: "tradeGroupDto.name" }];
 
   return (
     <>
       <Table
-        data={
-          tradeUserGroups ? tradeUserGroups : []
-        }
+        data={tradeUserGroups ? tradeUserGroups : []}
         columns={columns}
         hideCrudTableButonDetail={true}
         hideCrudTableButonEdit={true}

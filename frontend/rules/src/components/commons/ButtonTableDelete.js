@@ -13,7 +13,7 @@ function ButtonTableDelete(props) {
     if (props.onClick === undefined) {
       console.log("There in no onClickDetele to call");
     } else {
-      props.onClick(props.onClickParam);
+      props.onClick(props.onClickParam, props.onClickRow);
     }
     setShowDeleteConfirm(false);
   };
