@@ -9,7 +9,7 @@ import Home from './Home';
 import AppContainer from "./AppContainer";
 import logo from '../../img/logo.png'
 import Profile from "./Profile";
-import Business from "../registers/business/Business";
+import BusinessSearch from "../registers/business/BusinessSearch";
 import UserSearch from "../admin/user/UserSearch";
 import GroupSearch from "../admin/group/GroupSearch";
 import FunctionalitySearch from "../admin/functionality/FunctionalitySearch";
@@ -27,6 +27,9 @@ import GroupFunctionalityEdit from "../admin/group/GroupFunctionalityEdit";
 import UserDetail from "../admin/user/UserDetail";
 import UserCreate from "../admin/user/UserCreate";
 import UserEdit from "../admin/user/UserEdit";
+import BusinessCreate from "../registers/business/BusinessCreate";
+import BusinessEdit from "../registers/business/BusinessEdit";
+import BusinessDetail from "../registers/business/BusinessDetail";
 
 
 function AppNavbar(props) {
@@ -50,7 +53,7 @@ function AppNavbar(props) {
 
               <Nav className="me-auto" >
                 <NavDropdown title="Registros" id="basic-nav-dropdown" >
-                  <NavDropdown.Item href="/registers/business" style={{fontSize : fontMenuItemSize}}>Business</NavDropdown.Item>
+                  <NavDropdown.Item href="/registers/business/search" style={{fontSize : fontMenuItemSize}}>Business</NavDropdown.Item>
                 </NavDropdown>
 
                 <NavDropdown title="Administrator" id="basic-nav-dropdown" >
@@ -83,7 +86,13 @@ function AppNavbar(props) {
             <Route path="/" element={<AppContainer customClass="min-height" title="Home"> <Home /> </AppContainer>} />
             <Route path="/about" element={<AppContainer customClass="min-height" title="About"> <About /> </AppContainer>} />
             <Route path="/profile" element={<AppContainer customClass="min-height" title="Profile" > <Profile /> </AppContainer>} />
-            <Route path="/registers/business" element={<AppContainer customClass="min-height" title="Business" > <Business /> </AppContainer>} />
+            <Route path="/registers/business">
+              <Route path="search" element={<AppContainer customClass="min-height" title="Business" subtitle="Search" > <BusinessSearch /> </AppContainer>} />
+              <Route path="create" element={<AppContainer customClass="min-height" title="Business" subtitle="Create" > <BusinessCreate /> </AppContainer>} />
+              <Route path="edit" element={<AppContainer customClass="min-height" title="Business" subtitle="Edit" > <BusinessEdit /> </AppContainer>} />
+              <Route path="detail" element={<AppContainer customClass="min-height" title="Business" subtitle="Detail" > <BusinessDetail /> </AppContainer>} />
+
+            </Route>
 
             <Route path="/admin/user/">
               <Route path="search" element={<AppContainer customClass="min-height" title="User" subtitle="Search" > <UserSearch /> </AppContainer>} />

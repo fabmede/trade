@@ -2,7 +2,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Form from "react-bootstrap/Form";
 import React, { useState } from "react";
 import CrudSearch from "../../commons/crud/CrudSearch";
-import Table from "../../commons/Table";
 import { useNavigate } from "react-router-dom";
 
 function RoleSearch() {

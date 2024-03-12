@@ -1,7 +1,7 @@
 package com.ft.business.security;
 
-import com.ft.business.entity.Business;
-import com.ft.business.service.BusinessService;
+import com.ft.business.entity.TradeBusiness;
+import com.ft.business.service.TradeBusinessService;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
 import com.google.api.client.http.javanet.NetHttpTransport;
@@ -41,11 +41,11 @@ public class Oauth2Controller {
     }
 
     @Autowired
-    private BusinessService businessService;
+    private TradeBusinessService businessService;
 
 
     @GetMapping("/")
-    public ResponseEntity<List<Business>> getRoles(){
+    public ResponseEntity<List<TradeBusiness>> getRoles(){
         return ResponseEntity.ok(this.businessService.findAll());
     }
 }

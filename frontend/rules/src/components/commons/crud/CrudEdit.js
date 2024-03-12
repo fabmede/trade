@@ -97,7 +97,7 @@ function CrudEdit(props) {
     <>
       <ButtonGroup size="sm" hidden={props.hiddenButtonCrud}>
         <ButtonSave onClick={onClickSave} hidden={props.hiddenButtonCrudBackToSave}></ButtonSave>
-        <ButtonDelete onClick={onClickRemove} hidden={props.hiddenButtonCrudBackToSearch}></ButtonDelete>
+        <ButtonDelete onClick={onClickRemove} hidden={props.hiddenButtonCrudBackToRemove}></ButtonDelete>
         <ButtonBackSearch onClick={actionOnClickBackSearch} hidden={props.hiddenButtonCrudBackToSearch}></ButtonBackSearch>
       </ButtonGroup>
       <hr />
