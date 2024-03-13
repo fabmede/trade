@@ -1,7 +1,9 @@
 package com.ft.business.controller;
 
 import com.ft.business.dto.TradeBusinessDto;
+import com.ft.business.dto.TradeBusinessHistDto;
 import com.ft.business.entity.TradeBusiness;
+import com.ft.business.entity.TradeBusinessHist;
 import com.ft.business.service.TradeBusinessService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -40,10 +42,24 @@ public class TradeBusinessController {
         return ResponseEntity.ok(tradeBusinessDtoToReturn);
     }
 
+    @PutMapping("/{id}/tradebusinesssource")
+    public ResponseEntity<TradeBusinessDto> updateTradeBusinessSource(@RequestBody TradeBusinessDto tradeBusinessDto, @PathVariable Long id) {
+        tradeBusinessDto.setId(id);
+        TradeBusinessDto tradeBusinessDtoToReturn = this.tradeBusinessService.updateTradeBusinessSource(tradeBusinessDto); 
+        return ResponseEntity.ok(tradeBusinessDtoToReturn);
+    }   
+
     @DeleteMapping("/{id}")
     public ResponseEntity<String> delete(@PathVariable Long id) {
         this.tradeBusinessService.deleteTradeBusiness(id);
         return ResponseEntity.ok().body(null);
     }
 
+    @GetMapping("/{id}/tradebusinesssource")
+    public ResponseEntity<List<TradeBusinessHistDto>> getTradeBusinessHist(@PathVariable Long id) {
+        List<TradeBusinessHist> listTradeBusinessHist = this.tradeBusinessService.findTradeBusinessHistByTradeBusinessId(id); 
+        List<TradeBusinessHistDto> listTradeBusinessHistDto = new ArrayList<>();
+        listTradeBusinessHist.forEach(el-> listTradeBusinessHistDto.add(TradeBusinessHistDto.toDto(el)));
+        return ResponseEntity.ok(listTradeBusinessHistDto);
+    }   
 }

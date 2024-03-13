@@ -6,6 +6,7 @@ import CrudEdit from "../../commons/crud/CrudEdit";
 import FormImputText from "../../commons/FormImputText";
 import { Tab, Tabs } from "react-bootstrap";
 import BusinessSourceEdit from "./BusinessSourceEdit";
+import BusinessSourceDetail from "./BusinessSourceDetail";
 
 function BusinessEdit() {
   const api = "http://localhost:8090/tradebusiness/";
@@ -21,7 +22,7 @@ function BusinessEdit() {
   const callBackEditSuccess = (callBackEditSuccess) => {
     console.log("Calling callBackEditSuccess");
   };
-  
+
   return (
     <>
       <Tabs
@@ -58,6 +59,9 @@ function BusinessEdit() {
         </Tab>
         <Tab eventKey="source" title="Source">
           <BusinessSourceEdit></BusinessSourceEdit>
+        </Tab>
+        <Tab eventKey="hist" title="Historic">
+          <BusinessSourceDetail></BusinessSourceDetail>
         </Tab>
       </Tabs>
     </>
