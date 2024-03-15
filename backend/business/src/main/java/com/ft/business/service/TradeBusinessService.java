@@ -64,7 +64,12 @@ public class TradeBusinessService {
         }
 
         TradeBusiness tradeBusiness = oTradeBusiness.get();
-        this.saveNewTradeBusinessHist(tradeBusiness);
+        TradeBusiness tradeBusinessToHist = new TradeBusiness(); 
+        tradeBusinessToHist.setDescription(tradeBusiness.getDescription());
+        tradeBusinessToHist.setName(tradeBusiness.getName());
+        tradeBusinessToHist.setSource(tradeBusiness.getSource());
+        tradeBusinessToHist.setId(tradeBusiness.getId());
+        this.saveNewTradeBusinessHist(tradeBusinessToHist);
 
         tradeBusiness.setSource(tradeBusinessDto.getSource());
         tradeBusiness = this.tradeBusinessRepository.save(tradeBusiness);

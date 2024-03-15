@@ -11,7 +11,7 @@ function BusinessSourceEdit() {
   const routeLink = "/registers/business/search";
   const location = useLocation();
   const id = location.state.tradeBusiness.id;
-  const [sourceValue, setSourceValue] = useState();
+  const [sourceValue, setSourceValue] = useState(location.state.tradeBusiness.source);
   const axiosHttp = AxiosHttp();
   const { showSuccessMessage, showErrorMessage } = useContext(ContainerContext);
 
@@ -19,7 +19,6 @@ function BusinessSourceEdit() {
     let data = {
       source: sourceValue,
     };
-    console.log("data", data);
     return data;
   };
 
@@ -36,9 +35,6 @@ function BusinessSourceEdit() {
       });
   };
 
-  const onclickGetValue = () => {
-    console.log("value", sourceValue);
-  };
   return (
     <>
       <CrudEdit
@@ -50,21 +46,10 @@ function BusinessSourceEdit() {
         hiddenButtonCrudBackToRemove={true}
         onClickSave={onClickSave}
       >
-        <button onClick={onclickGetValue}> Get Value</button>
         <Editor
           height="90vh"
           defaultLanguage="java"
-          defaultValue="  import java.util.Map; 
-
-                          public class Rule1{
-                              
-                            public Map<String,Object> execute(Map<String,Object> paramns ){
-                                  Map<String,Object>  returnMap = new HashMap(); 
-                                  // TODO Implemet
-                                  return returnMap; 
-                              }
-
-                        }"
+          value={sourceValue}
           theme="vs-dark"
           onChange={setSourceValue}
         />
