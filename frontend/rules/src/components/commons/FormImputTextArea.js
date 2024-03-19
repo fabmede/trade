@@ -4,7 +4,6 @@ function FormImputTextArea(props) {
   const setValue = (value) => {
     let newValue = props.objectAttributes;
     newValue[value.name] = value.value;
-    console.log("ObjectAttributes", newValue);
     props.setObjectAttributes((oldValue) => ({
       ...oldValue,
       ...newValue,
@@ -24,7 +23,6 @@ function FormImputTextArea(props) {
           name={props.attributeName}
           onChange={(e) => setValue(e.target)}
           value={props.objectAttributes[props.attributeName]}
-          className={props.className}
           style={props.style}
         />
       </Form.Group>{" "}

@@ -7,6 +7,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.Map;
 
+import javax.script.Invocable;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
@@ -43,24 +44,26 @@ public class ExecutorJava {
         System.out.println(instance); // Should print "test.Test@hashcode".
     }
 
-    public static void executeJavaScript()   {
+    public static Object executeJavaScript(String source) {
         ScriptEngine engine = new ScriptEngineManager().getEngineByName("graal.js");
         Object result = null;
-        
-        try{
-        result = engine.eval(
-                "console.log1('Error');");
-        } catch (ScriptException e){
+
+        try {
+             result = engine.eval(source);
+            //Invocable invocable = (Invocable) engine;
+            //result = invocable.invokeFunction("composeGreeting", "baeldung");
+
+        } catch (ScriptException e) {
             result = e.getMessage();
         }
 
-        System.out.println(result);
+        return result;
 
     }
 
     public static void main(String[] args) throws Exception {
         // executeJava();
-        executeJavaScript();
+        executeJavaScript("console.log('teste');");
     }
 
 }

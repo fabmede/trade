@@ -73,4 +73,10 @@ public class TradeBusinessController {
         listTradeBusiness.forEach(el -> listTradeBusinessLanguageDto.add(TradeBusinessLanguageDto.toDto(el)));
         return ResponseEntity.ok(listTradeBusinessLanguageDto);
     }
+
+    @PutMapping("/tradebusinesssource/compileandexecute")
+    public ResponseEntity<Object> compileAndExecute(@RequestBody TradeBusinessDto tradeBusinessDto) {
+        Object compileAndeExecute = this.tradeBusinessService.compileAndExecute(tradeBusinessDto); 
+        return ResponseEntity.ok(compileAndeExecute);
+    } 
 }

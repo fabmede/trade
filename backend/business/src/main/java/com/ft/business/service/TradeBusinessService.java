@@ -6,6 +6,7 @@ import com.ft.business.entity.TradeBusiness;
 import com.ft.business.entity.TradeBusinessHist;
 import com.ft.business.entity.TradeBusinessHistPK;
 import com.ft.business.entity.TradeBusinessLanguage;
+import com.ft.business.executor.ExecutorJava;
 import com.ft.business.repositoty.TradeBusinessHistRepository;
 import com.ft.business.repositoty.TradeBusinessLanguageRepository;
 import com.ft.business.repositoty.TradeBusinessRepository;
@@ -122,4 +123,9 @@ public class TradeBusinessService {
         return tradeTradeBusinessLanguages; 
     }
 
+    public Object compileAndExecute(TradeBusinessDto tradeBusinessDto) {
+        Object compileAndExecute = ExecutorJava.executeJavaScript(tradeBusinessDto.getSource());
+        return compileAndExecute; 
+    }
+    
 }

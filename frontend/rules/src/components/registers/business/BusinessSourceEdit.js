@@ -25,15 +25,12 @@ function BusinessSourceEdit() {
 
   //https://www.freecodecamp.org/news/how-to-build-react-based-code-editor/
 
-
   useEffect(() => {
     loadTradeBusinessLanguages();
   }, []);
 
-
   const getData = () => {
-
-    editObject['source'] = sourceValue;  
+    editObject["source"] = sourceValue;
     return editObject;
   };
 
@@ -41,6 +38,7 @@ function BusinessSourceEdit() {
     axiosHttp
       .get(tradeBusinessLanguagesApi)
       .then((res) => {
+        console.log('res', res)
         setTradeBusinessLanguages(res.data);
       })
       .catch((err) => {
@@ -51,10 +49,7 @@ function BusinessSourceEdit() {
       });
   };
 
-
   const onClickSave = () => {
-
-    console.log("Salvando obj", getData());
     axiosHttp
       .put(api + id + "/tradebusinesssource", getData())
       .then((res) => {
@@ -63,6 +58,24 @@ function BusinessSourceEdit() {
       .catch((err) => {
         showErrorMessage(
           "There was an error while trying to change the register! "
+        );
+      });
+  };
+
+  const onClickCompileExecute = () => {
+    axiosHttp
+      .put(api + "tradebusinesssource/compileandexecute", getData())
+      .then((res) => {
+        let newValue = editObject;
+        newValue.output = res.data;
+        setEditObject((oldValue) => ({
+          ...oldValue,
+          ...newValue,
+        }));
+      })
+      .catch((err) => {
+        showErrorMessage(
+          "There was an error while trying call [" + api + "tradebusinesssource/compileandexecute] !"  
         );
       });
   };
@@ -101,11 +114,10 @@ function BusinessSourceEdit() {
               />
             </Col>
             <Col xs={4}>
-
               <FormImputTextArea
                 disabled={true}
                 rows={15}
-                style={{ backgroundColor: "black" }}
+                style={{ backgroundColor: "black", color : "white" }}
                 className={".text-success"}
                 label="Output"
                 attributeName="output"
@@ -125,7 +137,7 @@ function BusinessSourceEdit() {
               <hr></hr>
 
               <Button
-                onClick={console.log("Compiling")}
+                onClick={onClickCompileExecute}
                 size="sm"
                 style={{ textAlign: "left" }}
               >
