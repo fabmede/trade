@@ -12,10 +12,14 @@ public class TradeBusinessHistDto {
 
     private LocalDateTime date;
 
-    public TradeBusinessHistDto(TradeBusinessDto tradeBusinessDto, String source, LocalDateTime date) {
+    private TradeBusinessLanguageDto tradeBusinessLanguageDto;
+
+
+    public TradeBusinessHistDto(TradeBusinessDto tradeBusinessDto, String source, LocalDateTime date, TradeBusinessLanguageDto tradeBusinessLanguageDto) {
         this.tradeBusinessDto = tradeBusinessDto;
         this.source = source;
         this.date = date;
+        this.tradeBusinessLanguageDto = tradeBusinessLanguageDto; 
     }
 
     public TradeBusinessDto getTradeBusinessDto() {
@@ -38,7 +42,8 @@ public class TradeBusinessHistDto {
 
         return new TradeBusinessHistDto(TradeBusinessDto.toDto(tradeBusinessHist.getId().getTradeBusiness()),
                 tradeBusinessHist.getSource(),
-                tradeBusinessHist.getId().getDate());
+                tradeBusinessHist.getId().getDate(),
+                TradeBusinessLanguageDto.toDto(tradeBusinessHist.getTradeBusinessLanguage()));
     }
 
     @Override
@@ -73,5 +78,15 @@ public class TradeBusinessHistDto {
     public void setDate(LocalDateTime date) {
         this.date = date;
     }
+
+    public TradeBusinessLanguageDto getTradeBusinessLanguageDto() {
+        return tradeBusinessLanguageDto;
+    }
+
+    public void setTradeBusinessLanguageDto(TradeBusinessLanguageDto tradeBusinessLanguageDto) {
+        this.tradeBusinessLanguageDto = tradeBusinessLanguageDto;
+    }
+
+
 
 }

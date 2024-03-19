@@ -30,7 +30,9 @@ function BusinessSourceDetail() {
 
   const columns = [
     { header: "Date", field: "date" },
-    { header: "Source", field: "tradeBusinessDto.source" }
+    { header: "Source", field: "source" },
+    { header: "Language", field: "tradeBusinessLanguageDto.name" }
+
   ];
 
   return (

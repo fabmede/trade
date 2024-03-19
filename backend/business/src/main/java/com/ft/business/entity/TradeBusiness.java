@@ -1,15 +1,16 @@
 package com.ft.business.entity;
 
+
 import jakarta.persistence.*;
 
 @Entity
-@Table(name="trade_business")
-@NamedQuery(name="TradeBusiness.findAll", query="SELECT t FROM TradeBusiness t")
+@Table(name = "trade_business")
+@NamedQuery(name = "TradeBusiness.findAll", query = "SELECT t FROM TradeBusiness t")
 public class TradeBusiness {
 
     @Id
     @SequenceGenerator(name = "trade_business_seq", sequenceName = "trade_business_seq", initialValue = 1, allocationSize = 1)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "trade_business_seq")	
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "trade_business_seq")
     private Long id;
 
     @Column
@@ -20,6 +21,10 @@ public class TradeBusiness {
 
     @Column
     private String source;
+
+    @ManyToOne
+    @JoinColumn(name = "trade_business_language_id")
+    private TradeBusinessLanguage tradeBusinessLanguage;
 
     public Long getId() {
         return id;
@@ -53,5 +58,13 @@ public class TradeBusiness {
         this.name = name;
     }
 
-    
+    public TradeBusinessLanguage getTradeBusinessLanguage() {
+        return tradeBusinessLanguage;
+    }
+
+    public void setTradeBusinessLanguage(TradeBusinessLanguage tradeBusinessLanguage) {
+        this.tradeBusinessLanguage = tradeBusinessLanguage;
+    }
+
+
 }

@@ -2,8 +2,10 @@ package com.ft.business.controller;
 
 import com.ft.business.dto.TradeBusinessDto;
 import com.ft.business.dto.TradeBusinessHistDto;
+import com.ft.business.dto.TradeBusinessLanguageDto;
 import com.ft.business.entity.TradeBusiness;
 import com.ft.business.entity.TradeBusinessHist;
+import com.ft.business.entity.TradeBusinessLanguage;
 import com.ft.business.service.TradeBusinessService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -62,4 +64,13 @@ public class TradeBusinessController {
         listTradeBusinessHist.forEach(el-> listTradeBusinessHistDto.add(TradeBusinessHistDto.toDto(el)));
         return ResponseEntity.ok(listTradeBusinessHistDto);
     }   
+
+    @GetMapping("/tradebusinesslanguages")
+    public ResponseEntity<List<TradeBusinessLanguageDto>> getTradebusinesslanguages() {
+
+        List<TradeBusinessLanguageDto> listTradeBusinessLanguageDto = new ArrayList<>();
+        List<TradeBusinessLanguage> listTradeBusiness = this.tradeBusinessService.findAllTradeBusinessLanguage();
+        listTradeBusiness.forEach(el -> listTradeBusinessLanguageDto.add(TradeBusinessLanguageDto.toDto(el)));
+        return ResponseEntity.ok(listTradeBusinessLanguageDto);
+    }
 }

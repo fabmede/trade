@@ -7,21 +7,24 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.Map;
 
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
 import javax.tools.JavaCompiler;
 import javax.tools.ToolProvider;
 
 public class ExecutorJava {
 
-    public static void main(String[] args) throws Exception{
+    public static void executeJava() throws Exception {
         // Prepare source somehow.
         String source = "import java.util.Map; public class Rule1 {\r\n" + //
-                        "\r\n" + //
-                        "    public Map<String, Object> executeRule() {\r\n" + //
-                        "\r\n" + //
-                        "        System.out.println(\"Executou o método\");\r\n" + //
-                        "        return null;\r\n" + //
-                        "    }\r\n" + //
-                        "}";
+                "\r\n" + //
+                "    public Map<String, Object> executeRule() {\r\n" + //
+                "\r\n" + //
+                "        System.out.println(\"Executou o método\");\r\n" + //
+                "        return null;\r\n" + //
+                "    }\r\n" + //
+                "}";
 
         // Save source in .java file.
         File root = Files.createTempDirectory("java").toFile();
@@ -38,6 +41,26 @@ public class ExecutorJava {
         Class<?> cls = Class.forName("Rule1", true, classLoader); // Should print "hello".
         Object instance = cls.getDeclaredConstructor().newInstance(); // Should print "world".
         System.out.println(instance); // Should print "test.Test@hashcode".
+    }
+
+    public static void executeJavaScript()   {
+        ScriptEngine engine = new ScriptEngineManager().getEngineByName("graal.js");
+        Object result = null;
+        
+        try{
+        result = engine.eval(
+                "console.log1('Error');");
+        } catch (ScriptException e){
+            result = e.getMessage();
+        }
+
+        System.out.println(result);
+
+    }
+
+    public static void main(String[] args) throws Exception {
+        // executeJava();
+        executeJavaScript();
     }
 
 }

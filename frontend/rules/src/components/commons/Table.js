@@ -6,15 +6,15 @@ import ButtonTableDelete from "./ButtonTableDelete";
 
 function Table(props) {
   const resolveField = (data, field) => {
+
     var fieldHierarchy = new String(field).split(".");
     var dataValue = data;
 
     if (fieldHierarchy.length > 0) {
       fieldHierarchy.forEach((element) => {
-        dataValue = dataValue[element];
+        dataValue = dataValue[element]?dataValue[element]:"";
       });
     }
-
     return dataValue;
   };
 

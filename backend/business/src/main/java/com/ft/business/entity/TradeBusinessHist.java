@@ -3,8 +3,8 @@ package com.ft.business.entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name="trade_business_hist")
-@NamedQuery(name="TradeBusinessHist.findAll", query="SELECT t FROM TradeBusinessHist t")
+@Table(name = "trade_business_hist")
+@NamedQuery(name = "TradeBusinessHist.findAll", query = "SELECT t FROM TradeBusinessHist t")
 public class TradeBusinessHist {
 
     @Id
@@ -12,6 +12,10 @@ public class TradeBusinessHist {
 
     @Column
     private String source;
+
+    @ManyToOne
+    @JoinColumn(name = "trade_business_language_id")
+    private TradeBusinessLanguage tradeBusinessLanguage;
 
     public TradeBusinessHistPK getId() {
         return id;
@@ -21,9 +25,16 @@ public class TradeBusinessHist {
         this.id = id;
     }
 
-    
     public String getSource() {
         return source;
+    }
+
+    public TradeBusinessLanguage getTradeBusinessLanguage() {
+        return tradeBusinessLanguage;
+    }
+
+    public void setTradeBusinessLanguage(TradeBusinessLanguage tradeBusinessLanguage) {
+        this.tradeBusinessLanguage = tradeBusinessLanguage;
     }
 
     public void setSource(String source) {
@@ -54,9 +65,5 @@ public class TradeBusinessHist {
             return false;
         return true;
     }
-
-
-    
-
 
 }

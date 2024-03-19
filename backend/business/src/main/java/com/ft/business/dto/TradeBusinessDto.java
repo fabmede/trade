@@ -6,17 +6,21 @@ public class TradeBusinessDto {
 
     private Long id;
 
-    private String name; 
+    private String name;
 
     private String description;
 
     private String source;
 
-    public TradeBusinessDto(Long id, String name, String description, String source) {
+    private TradeBusinessLanguageDto tradeBusinessLanguageDto;
+
+    public TradeBusinessDto(Long id, String name, String description, String source,
+            TradeBusinessLanguageDto tradeBusinessLanguageDto) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.source = source;
+        this.tradeBusinessLanguageDto = tradeBusinessLanguageDto;
     }
 
     public Long getId() {
@@ -43,7 +47,6 @@ public class TradeBusinessDto {
         this.source = source;
     }
 
-    
     public String getName() {
         return name;
     }
@@ -51,6 +54,8 @@ public class TradeBusinessDto {
     public void setName(String name) {
         this.name = name;
     }
+
+    
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -76,12 +81,18 @@ public class TradeBusinessDto {
         return true;
     }
 
-    public static TradeBusinessDto toDto(TradeBusiness tradeUserTradeGroup) {
+    public static TradeBusinessDto toDto(TradeBusiness tradeBusiness) {
 
-        return new TradeBusinessDto(tradeUserTradeGroup.getId(), tradeUserTradeGroup.getName(),tradeUserTradeGroup.getDescription(),
-                tradeUserTradeGroup.getSource());
+        return new TradeBusinessDto(tradeBusiness.getId(), tradeBusiness.getName(), tradeBusiness.getDescription(),
+                tradeBusiness.getSource(), TradeBusinessLanguageDto.toDto(tradeBusiness.getTradeBusinessLanguage()));
     }
 
+    public TradeBusinessLanguageDto getTradeBusinessLanguageDto() {
+        return tradeBusinessLanguageDto;
+    }
 
+    public void setTradeBusinessLanguageDto(TradeBusinessLanguageDto tradeBusinessLanguageDto) {
+        this.tradeBusinessLanguageDto = tradeBusinessLanguageDto;
+    }
 
 }

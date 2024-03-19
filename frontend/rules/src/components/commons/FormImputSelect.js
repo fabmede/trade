@@ -11,8 +11,6 @@ function FormImputSelect(props) {
     props.objectAttributes[props.attributeName] = valueSelected; 
     let newValue = props.objectAttributes;
 
-    console.log("ObjectAttributes", props.objectAttributes);
-
     props.setObjectAttributes((oldValue) => ({
       ...oldValue,
       ...newValue,
