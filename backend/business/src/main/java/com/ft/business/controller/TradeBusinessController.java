@@ -1,8 +1,11 @@
 package com.ft.business.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ft.business.dto.TradeBusinessDto;
 import com.ft.business.dto.TradeBusinessHistDto;
 import com.ft.business.dto.TradeBusinessLanguageDto;
+import com.ft.business.dto.TradeBusinessTestAndExecuteDto;
 import com.ft.business.entity.TradeBusiness;
 import com.ft.business.entity.TradeBusinessHist;
 import com.ft.business.entity.TradeBusinessLanguage;
@@ -75,8 +78,23 @@ public class TradeBusinessController {
     }
 
     @PutMapping("/tradebusinesssource/compileandexecute")
-    public ResponseEntity<Object> compileAndExecute(@RequestBody TradeBusinessDto tradeBusinessDto) {
-        Object compileAndeExecute = this.tradeBusinessService.compileAndExecute(tradeBusinessDto); 
-        return ResponseEntity.ok(compileAndeExecute);
-    } 
+    public ResponseEntity<Object> compileAndExecute(@RequestBody TradeBusinessTestAndExecuteDto tradeBusinessTestAndExecuteDto) {
+        Object compileAndeExecute = this.tradeBusinessService.compileAndExecute(tradeBusinessTestAndExecuteDto); 
+        String response = ""; 
+        try {
+            response = new ObjectMapper().writeValueAsString(compileAndeExecute);
+        }catch( JsonProcessingException e ){
+            response = e.getMessage();      
+        }
+
+        return ResponseEntity.ok(response);
+    }
+    
+    @PutMapping("/{id}/execute")
+    public ResponseEntity<TradeBusinessDto> executeTradeBusiness(@RequestBody TradeBusinessDto tradeBusinessDto, @PathVariable Long id) {
+        tradeBusinessDto.setId(id);
+        TradeBusinessDto tradeBusinessDtoToReturn = this.tradeBusinessService.updateTradeBusiness(tradeBusinessDto); 
+
+        return ResponseEntity.ok(tradeBusinessDtoToReturn);
+    }
 }

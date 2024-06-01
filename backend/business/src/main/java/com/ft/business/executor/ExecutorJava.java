@@ -5,14 +5,14 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.util.Map;
 
 import javax.script.Invocable;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
-import javax.script.ScriptException;
 import javax.tools.JavaCompiler;
 import javax.tools.ToolProvider;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class ExecutorJava {
 
@@ -44,35 +44,29 @@ public class ExecutorJava {
         System.out.println(instance); // Should print "test.Test@hashcode".
     }
 
-    public static Object executeJavaScript(String source) {
-        ScriptEngine engine = new ScriptEngineManager().getEngineByName("graal.js");
-        Object result = null;
+    public static String executeJavaScript(String source, String parameters) {
+
+        String returnObject = null;
+        Object returnInvokeJsFunction = null; 
 
         try {
-             result = engine.eval(source);
-            //Invocable invocable = (Invocable) engine;
-            //result = invocable.invokeFunction("composeGreeting", "baeldung");
 
-        } catch (ScriptException e) {
-            result = e.getMessage();
+            ScriptEngineManager manager = new ScriptEngineManager();
+            ScriptEngine engine = manager.getEngineByName("JavaScript");
+
+            // evaluate script
+            engine.eval(source);
+            Invocable inv = (Invocable) engine;
+
+            returnInvokeJsFunction = inv.invokeFunction("execute", parameters); // This one works.
+            returnObject = new ObjectMapper().writeValueAsString(returnInvokeJsFunction);
+
+        } catch (Exception e) {
+            returnObject = e.getMessage();
         }
 
-        return result;
+        return returnObject;
 
     }
 
-    public static void main(String[] args) throws Exception {
-        // executeJava();
-        executeJavaScript("console.log('teste');");
-    }
-
-}
-
-class Rule1 {
-
-    public Map<String, Object> executeRule() {
-
-        System.out.println("Executou o método");
-        return null;
-    }
 }

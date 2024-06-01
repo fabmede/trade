@@ -2,6 +2,7 @@ package com.ft.business.service;
 
 
 import com.ft.business.dto.TradeBusinessDto;
+import com.ft.business.dto.TradeBusinessTestAndExecuteDto;
 import com.ft.business.entity.TradeBusiness;
 import com.ft.business.entity.TradeBusinessHist;
 import com.ft.business.entity.TradeBusinessHistPK;
@@ -123,8 +124,8 @@ public class TradeBusinessService {
         return tradeTradeBusinessLanguages; 
     }
 
-    public Object compileAndExecute(TradeBusinessDto tradeBusinessDto) {
-        Object compileAndExecute = ExecutorJava.executeJavaScript(tradeBusinessDto.getSource());
+    public Object compileAndExecute(TradeBusinessTestAndExecuteDto tradeBusinessTestAndExecuteDto) {
+        Object compileAndExecute = ExecutorJava.executeJavaScript(tradeBusinessTestAndExecuteDto.getSource(), tradeBusinessTestAndExecuteDto.getJsonStringParameter());
         return compileAndExecute; 
     }
     

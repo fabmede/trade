@@ -68,6 +68,7 @@ function BusinessSourceEdit() {
       .then((res) => {
         let newValue = editObject;
         newValue.output = res.data;
+        console.log('res.data', res.data);
         setEditObject((oldValue) => ({
           ...oldValue,
           ...newValue,
@@ -129,7 +130,7 @@ function BusinessSourceEdit() {
                 disabled={false}
                 rows={10}
                 label="Input"
-                attributeName="input"
+                attributeName="jsonStringParameter"
                 setObjectAttributes={setEditObject}
                 objectAttributes={editObject}
               />
