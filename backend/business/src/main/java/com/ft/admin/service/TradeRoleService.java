@@ -3,26 +3,31 @@ package com.ft.admin.service;
 import com.ft.admin.dto.TradeRoleDto;
 import com.ft.admin.entity.TradeRole;
 import com.ft.admin.repository.TradeRoleRepository;
+import com.ft.commom.crud.AbstractService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
-public class TradeRoleService {
+public class TradeRoleService extends AbstractService <TradeRoleDto>{
 
     @Autowired
     private TradeRoleRepository tradeRoleRepository;
 
-
-    public List<TradeRole> findAll(){
-        return this.tradeRoleRepository.findAll();
+    public List<TradeRoleDto> findAll(){
+        List<TradeRole> tradeRoles = this.tradeRoleRepository.findAll();
+        return tradeRoles.stream().map( el-> new TradeRoleDto(el.getId(), el.getDescription(), el.getName())).collect(Collectors.toList()); 
     }
 
     @Transactional
-    public TradeRoleDto updateTradeRole(TradeRoleDto tradeRoleDto){
+    public TradeRoleDto update(TradeRoleDto tradeRoleDto, String idAString){
+
+        tradeRoleDto.setId(Integer.valueOf(idAString));
         Optional<TradeRole> oTradeRole =  this.tradeRoleRepository.findById(tradeRoleDto.getId()); 
 
         if(!oTradeRole.isPresent()){
@@ -37,7 +42,7 @@ public class TradeRoleService {
     }   
     
     @Transactional
-    public TradeRoleDto createTradeRole(TradeRoleDto tradeRoleDto){
+    public TradeRoleDto create(TradeRoleDto tradeRoleDto){
         TradeRole tradeRole = new TradeRole();
         tradeRole.setDescription(tradeRoleDto.getDescription());
         tradeRole.setName(tradeRoleDto.getName());
@@ -46,7 +51,9 @@ public class TradeRoleService {
     }   
     
     @Transactional
-    public void deleteTradeRole(Integer id){
+    public void delete(String idAString){
+
+       Integer id = Integer.valueOf(idAString); 
        Optional<TradeRole> oTradeRole =  this.tradeRoleRepository.findById(id); 
 
         if(!oTradeRole.isPresent()){

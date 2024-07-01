@@ -7,6 +7,8 @@ import com.ft.admin.entity.*;
 import com.ft.admin.repository.TradeUserRepository;
 import com.ft.admin.repository.TradeUserTradeGroupRepository;
 import com.ft.admin.repository.TradeUserTradeRoleFuncsRepository;
+import com.ft.commom.crud.AbstractService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,7 +18,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-public class TradeUserService {
+public class TradeUserService extends AbstractService<TradeUserDto> {
 
     @Autowired
     private TradeUserRepository tradeUserRepository;
@@ -34,27 +36,41 @@ public class TradeUserService {
         return listTradeUserDto;
     }
 
-    public List<TradeUserTradeRoleFunc> findTradeUserTradeRoleFuncsByUserEmail(String email) {
-        List<TradeUserTradeRoleFunc> tradeUserTradeRoleFunc = this.tradeUserTradeRoleFuncsRepository
-                .findByUserEmail(email);
-        return tradeUserTradeRoleFunc;
-    }
-
-    public List<TradeUserTradeGroupDto> findTradeUserTradeGroupByEmail(String email) {
-        List<TradeUserTradeGroup> tradeUserTradeGroups = this.tradeUserTradeGroupRepository.findByUserEmail(email);
-        List<TradeUserTradeGroupDto> tradeUserTradeGroupsDto = tradeUserTradeGroups.stream()
-                .map(el -> TradeUserTradeGroupDto.toDto(el))
-                .collect(Collectors.toList());
-        return tradeUserTradeGroupsDto;
-    }
-
     @Transactional
-    public TradeUserDto saveTradeUser(TradeUserDto tradeUserDto) {
+    public TradeUserDto create(TradeUserDto tradeUserDto) {
         TradeUser tradeUser = new TradeUser();
         tradeUser.setEmail(tradeUserDto.getEmail());
         tradeUser.setName(tradeUserDto.getName());
         tradeUser = this.tradeUserRepository.save(tradeUser);
         return new TradeUserDto(tradeUser.getEmail(), tradeUser.getName());
+    }
+
+    @Transactional
+    public TradeUserDto update(TradeUserDto tradeUserDto, String idAString) {
+
+        tradeUserDto.setEmail(idAString);
+        Optional<TradeUser> oTradeUser = this.tradeUserRepository.findById(tradeUserDto.getEmail());
+
+        if (!oTradeUser.isPresent()) {
+            throw new RuntimeException("There is no register to update");
+        }
+
+        TradeUser tradeUser = oTradeUser.get();
+        tradeUser.setName(tradeUserDto.getName());
+        tradeUser = this.tradeUserRepository.save(tradeUser);
+        return new TradeUserDto(tradeUser.getEmail(), tradeUser.getName());
+    }
+
+    @Transactional
+    public void delete(String idAString) {
+        Optional<TradeUser> oTradeUser = this.tradeUserRepository.findById(idAString);
+
+        if (!oTradeUser.isPresent()) {
+            throw new RuntimeException("There is no register to update");
+        }
+
+        TradeUser tradeUser = oTradeUser.get();
+        this.tradeUserRepository.delete(tradeUser);
     }
 
     @Transactional
@@ -81,6 +97,22 @@ public class TradeUserService {
                 tradeUserTradeGroupDto.getTradeGroupDto().getId());
         return tradeUserTradeGroupSaved;
     }
+
+
+    public List<TradeUserTradeRoleFunc> findTradeUserTradeRoleFuncsByUserEmail(String email) {
+        List<TradeUserTradeRoleFunc> tradeUserTradeRoleFunc = this.tradeUserTradeRoleFuncsRepository
+                .findByUserEmail(email);
+        return tradeUserTradeRoleFunc;
+    }
+
+    public List<TradeUserTradeGroupDto> findTradeUserTradeGroupByEmail(String email) {
+        List<TradeUserTradeGroup> tradeUserTradeGroups = this.tradeUserTradeGroupRepository.findByUserEmail(email);
+        List<TradeUserTradeGroupDto> tradeUserTradeGroupsDto = tradeUserTradeGroups.stream()
+                .map(el -> TradeUserTradeGroupDto.toDto(el))
+                .collect(Collectors.toList());
+        return tradeUserTradeGroupsDto;
+    }
+
 
     @Transactional
     public TradeUserTradeRoleFunc createTradeUserTradeRoleFuncs(TradeUserTradeRoleFuncDto tradeUserTradeRoleFuncDto) {
@@ -131,31 +163,6 @@ public class TradeUserService {
         tradeUserTradeRoleFuncsRepository.flush();
     }
 
-    @Transactional
-    public TradeUserDto updateTradeUser(TradeUserDto tradeUserDto) {
-        Optional<TradeUser> oTradeUser = this.tradeUserRepository.findById(tradeUserDto.getEmail());
-
-        if (!oTradeUser.isPresent()) {
-            throw new RuntimeException("There is no register to update");
-        }
-
-        TradeUser tradeUser = oTradeUser.get();
-        tradeUser.setName(tradeUserDto.getName());
-        tradeUser = this.tradeUserRepository.save(tradeUser);
-        return new TradeUserDto(tradeUser.getEmail(), tradeUser.getName());
-    }
-
-    @Transactional
-    public void deleteTradeUser(String email) {
-        Optional<TradeUser> oTradeUser = this.tradeUserRepository.findById(email);
-
-        if (!oTradeUser.isPresent()) {
-            throw new RuntimeException("There is no register to update");
-        }
-
-        TradeUser tradeUser = oTradeUser.get();
-        this.tradeUserRepository.delete(tradeUser);
-    }
 
     public TradeUserTradeRoleFunc findTradeUserTradeRoleFuncById(String email,
             Integer tradeFunctionalityId,

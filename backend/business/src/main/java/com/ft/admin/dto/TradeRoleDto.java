@@ -1,6 +1,8 @@
 package com.ft.admin.dto;
 
-public class TradeRoleDto {
+import com.ft.commom.crud.AbstractDto;
+
+public class TradeRoleDto extends AbstractDto {
     
     private Integer id;
 
@@ -38,4 +40,7 @@ public class TradeRoleDto {
         this.name = name;
     }
     
+    public String getIdAsString(){
+        return String.valueOf(this.getId());
+    }
 }

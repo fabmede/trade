@@ -11,9 +11,10 @@ import org.springframework.transaction.annotation.Transactional;
 import com.ft.admin.dto.TradeFunctionalityDto;
 import com.ft.admin.entity.TradeFunctionality;
 import com.ft.admin.repository.TradeFunctionalityRepository;
+import com.ft.commom.crud.AbstractService;
 
 @Service
-public class TradeFunctionalityService {
+public class TradeFunctionalityService extends AbstractService<TradeFunctionalityDto> {
  
     @Autowired
     TradeFunctionalityRepository tradeFunctionalityRepository;  
@@ -24,7 +25,8 @@ public class TradeFunctionalityService {
     }
 
     @Transactional
-    public TradeFunctionalityDto updateTradeFunctionality(TradeFunctionalityDto tradeFunctionalityDto){
+    public TradeFunctionalityDto update(TradeFunctionalityDto tradeFunctionalityDto, String idAString){
+        tradeFunctionalityDto.setId(Integer.valueOf(idAString));
         Optional<TradeFunctionality> oTradeFunctionality =  this.tradeFunctionalityRepository.findById(tradeFunctionalityDto.getId()); 
 
         if(!oTradeFunctionality.isPresent()){
@@ -39,7 +41,7 @@ public class TradeFunctionalityService {
     }   
     
     @Transactional
-    public TradeFunctionalityDto createTradeFunctionality(TradeFunctionalityDto tradeFunctionalityDto){
+    public TradeFunctionalityDto create(TradeFunctionalityDto tradeFunctionalityDto){
         TradeFunctionality tradeFunctionality = new TradeFunctionality();
         tradeFunctionality.setDescription(tradeFunctionalityDto.getDescription());
         tradeFunctionality.setName(tradeFunctionalityDto.getName());
@@ -48,7 +50,9 @@ public class TradeFunctionalityService {
     }   
     
     @Transactional
-    public void deleteTradeFunctionality(Integer id){
+    public void delete(String idAString){
+       
+       Integer id = Integer.valueOf(idAString); 
        Optional<TradeFunctionality> oTradeFunctionality =  this.tradeFunctionalityRepository.findById(id); 
 
         if(!oTradeFunctionality.isPresent()){

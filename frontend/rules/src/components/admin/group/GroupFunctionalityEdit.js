@@ -15,8 +15,6 @@ function GroupFunctionalityEdit(props) {
   const currentTradeGroup = props.tradeGroup;
 
   const [tradeFunctionalitiesRoles, setTradeFunctionalitiesRoles] = useState();
-  const [tradeFunctionalities, setTradeFunctionalities] = useState();
-  const [tradeRoles, setTradeRoles] = useState([]);
   const [showSaveConfirm, setShowSaveConfirm] = useState(false);
 
   const handleSaveClose = () => setShowSaveConfirm(false);
@@ -26,8 +24,6 @@ function GroupFunctionalityEdit(props) {
 
   useEffect(() => {
     loadTradeGroupTradeRolesFunctionaliesRoles();
-    loadTradeFunctionalities();
-    loadTradeRoles();
   }, []);
 
   const loadTradeGroupTradeRolesFunctionaliesRoles = () => {
@@ -42,31 +38,6 @@ function GroupFunctionalityEdit(props) {
       .finally(() => {});
   };
 
-  const loadTradeFunctionalities = () => {
-    axiosHttp
-      .get(tradeFunctionalityApi)
-      .then((res) => {
-        setTradeFunctionalities(res.data);
-      })
-      .catch((err) => {
-        console.error("Error call " + tradeFunctionalityApi, err);
-      })
-      .finally(() => {
-        console.debug("Finally call " + tradeFunctionalityApi);
-      });
-  };
-
-  const loadTradeRoles = () => {
-    axiosHttp
-      .get(tradeRolesApi)
-      .then((res) => {
-        setTradeRoles(res.data);
-      })
-      .catch((err) => {
-        console.error("Error call " + tradeRolesApi, err);
-      })
-      .finally(() => {});
-  };
 
   const columns = [
     { header: "Functionality", field: "tradeFunctionalityDto.name" },
@@ -174,8 +145,7 @@ function GroupFunctionalityEdit(props) {
                 attributeName="functionality"
                 setObjectAttributes={setEditObject}
                 objectAttributes={editObject}
-                objectList={tradeFunctionalities}
-                objectListValue="id"
+                apiLoadObjects={tradeFunctionalityApi}
                 objectListShow="description"
               ></FormImputSelect>
 
@@ -184,8 +154,7 @@ function GroupFunctionalityEdit(props) {
                 attributeName="role"
                 setObjectAttributes={setEditObject}
                 objectAttributes={editObject}
-                objectList={tradeRoles}
-                objectListValue="id"
+                apiLoadObjects={tradeRolesApi}
                 objectListShow="description"
               ></FormImputSelect>
 

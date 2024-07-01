@@ -1,11 +1,33 @@
+import { useEffect, useState } from "react";
 import { Form } from "react-bootstrap";
+import AxiosHttp from "../../commons/utils/AxiosHttpInterceptor";
 
 function FormImputSelect(props) {
 
+  const [objects, setObjects] = useState([]);
+  const axiosHttp = AxiosHttp();
+
+  useEffect(() => {
+    loadObjects();
+  }, []);
+
+  const loadObjects = () => {
+
+    axiosHttp
+      .get(props.apiLoadObjects)
+      .then((res) => {
+        setObjects(res.data);
+      })
+      .catch((err) => {
+        console.error("Error call " + props.apiLoadObjects, err);
+      })
+      .finally(() => {});
+  };
+
   const setValue = (value) => {
 
-    const valueSelected = props.objectList?.find(
-      (x) => String(x[props.objectListValue]) === String(value.value)
+    const valueSelected = objects?.find(
+      (x) => String(x.id) === String(value.value)
     );
 
     props.objectAttributes[props.attributeName] = valueSelected; 
@@ -28,12 +50,12 @@ function FormImputSelect(props) {
           onChange={(e) => setValue(e.target)}
         >
           <option>Select one</option>
-          {props.objectList
-            ? props.objectList.map((obj, index) => (
+          {objects
+            ? objects.map((obj, index) => (
                 <option
-                  reavalue={obj[props.objectListValue]}
+                  reavalue={obj.id}
                   key={index}
-                  value={obj[props.objectListValue]}
+                  value={obj.id}
                 >
                   {obj[props.objectListShow]}
                 </option>

@@ -1,6 +1,8 @@
 package com.ft.admin.dto;
 
-public class TradeGroupDto {
+import com.ft.commom.crud.AbstractDto;
+
+public class TradeGroupDto extends AbstractDto{
     
     private Integer id;
 
@@ -37,5 +39,8 @@ public class TradeGroupDto {
         this.description = description;
         this.name = name;
     }
-    
+
+    public String getIdAsString(){
+        return String.valueOf(this.getId());
+    }
 }

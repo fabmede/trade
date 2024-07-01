@@ -1,6 +1,8 @@
 package com.ft.admin.dto;
 
-public class TradeUserDto {
+import com.ft.commom.crud.AbstractDto;
+
+public class TradeUserDto extends AbstractDto{
 
     private String email;
 
@@ -25,5 +27,11 @@ public class TradeUserDto {
     public TradeUserDto(String email, String name) {
         this.email = email;
         this.name = name;
+    }
+
+
+    @Override
+    public String getIdAsString() {
+        return this.email;
     }
 }
